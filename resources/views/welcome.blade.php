@@ -14,7 +14,6 @@
         body {
             margin: 0;
             background: #add8e6;
-            /* biru muda */
             font-family: 'Arial Black', Arial, sans-serif;
             color: black;
             height: 100vh;
@@ -52,7 +51,6 @@
             border: 2px solid black;
         }
 
-
         .header-top .tanggal {
             border: 2px solid black;
             border-radius: 25px;
@@ -62,7 +60,6 @@
             align-items: center;
         }
 
-        /* Logo placeholder */
         .header-top .logos {
             display: flex;
             gap: 15px;
@@ -72,7 +69,6 @@
             width: 50px;
             height: 50px;
             background: #004080;
-            /* biru gelap */
             border-radius: 50%;
             border: 2px solid black;
             position: relative;
@@ -96,7 +92,7 @@
         .profile-img {
             border: 2px solid black;
             border-radius: 15px;
-            width: ;
+            width: 40%;
             height: 100%;
             overflow: hidden;
         }
@@ -108,14 +104,12 @@
             display: block;
         }
 
-        /* Data info */
         .info-boxes {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             gap: 12px;
-            /* height: 100%; */
         }
 
         .info-box {
@@ -139,7 +133,6 @@
             height: 24px;
         }
 
-        /* Icon shapes (simple svg) */
         .icon-user::before {
             content: "👤";
             font-size: 20px;
@@ -217,7 +210,6 @@
             flex-grow: 1;
         }
 
-        /* Responsive */
         @media (max-width: 800px) {
             .container {
                 flex-direction: column;
@@ -251,42 +243,55 @@
             background-color: black;
             border-radius: 2px;
         }
+
+        .istirahat {
+            font-size: 50px;
+            margin: 10px 0px 10px 0px;
+        }
+
+        .infoLainnya {
+            font-size: 25px
+        }
     </style>
 </head>
 
 <body>
 
-
-    <div class="header-top">
-        <div class="burger-menu" id="burgerMenu" title="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <div class="tanggal">
-            <span>Rabu</span>
-            <span>13 - Agustus - 2025</span>
-        </div>
-        <div class="logos">
-            <div class="logo-box" title="SMK">SMK</div>
-            <div class="logo-box" title="Label">Label</div>
-        </div>
-    </div>
-
     <div class="container">
         <section class="left-panel">
-            <div class="profile-section">
-                <div class="profile-img">
-                    <img src="https://i.postimg.cc/7ZQQ64Q2/profile.jpg" alt="Foto Profil Muhammad Aditya" />
+            <div class="header-top">
+                <div class="burger-menu" id="burgerMenu" title="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-                <div class="info-boxes">
-                    <div class="info-box"><span class="icon icon-user"></span> Muhamad Aditya</div>
-                    <div class="info-box"><span class="icon icon-book"></span> Matematika</div>
-                    <div class="info-box"><span class="icon icon-home"></span> Lab 1</div>
-                    <div class="info-box"><span class="icon icon-clock"></span> 7:15 - 10:50</div>
+
+                <div class="tanggal">
+                    <span id="hariText">-</span>
+                    <span id="tanggalText">-</span>
+                </div>
+                <div class="logos">
+                    <div class="logo-box" title="SMK">SMK</div>
+                    <div class="logo-box" title="Label">Label</div>
                 </div>
             </div>
+
+            <div class="profile-section">
+                <div class="profile-img">
+                    <img src="https://i.postimg.cc/7ZQQ64Q2/profile.jpg" alt="Foto Profil" id="fotoGuru" />
+                </div>
+                <div class="info-boxes">
+                    <h1 class="istirahat" id="istirahat">Tidak Ada Aktivitas</h1>
+                    <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab: Saka Lawrance</span></h1>
+                    <h1 class="infoLainnya" id="ruangan"><span>Lab 1</span></h1>
+
+                    <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
+                    <div class="info-box" id="infoMapel"><span class="icon icon-book"></span> -</div>
+                    <div class="info-box" id="infoRuangan"><span class="icon icon-home"></span> -</div>
+                    <div class="info-box" id="infoWaktu"><span class="icon icon-clock"></span> -</div>
+                </div>
+            </div>
+
             <div class="clock-box" id="digitalClock">--:--</div>
         </section>
 
@@ -294,20 +299,9 @@
             <!-- Jadwal akan di generate oleh JS -->
         </section>
     </div>
-    <div id="sidebar"
-        style="
-    height: 100vh;
-    width: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #007ACC;
-    overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 60px;
-    color: white;
-    z-index: 999;">
 
+    <div id="sidebar"
+        style="height: 100vh;width: 0;position: fixed;top: 0;left: 0;background-color: #007ACC;overflow-x: hidden;transition: 0.3s;padding-top: 60px;color: white;z-index: 999;">
         <a href="#" onclick="closeSidebar()" style="padding: 8px 32px; text-decoration:none; color: white;">Close
             ×</a>
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 1</a>
@@ -315,114 +309,136 @@
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 3</a>
     </div>
 
-
     <script>
-        // DATA jadwal pelajaran
-        const schedule = [{
-                num: 1,
-                time: '07:15-07:55',
-                subject: 'Matematika'
-            },
-            {
-                num: 2,
-                time: '07:55-08:35',
-                subject: 'Matematika'
-            },
-            {
-                num: 3,
-                time: '08:35-09:15',
-                subject: 'Matematika'
-            },
-            {
-                num: 4,
-                time: '09:30-10:10',
-                subject: 'Matematika'
-            },
-            {
-                num: 5,
-                time: '10:10-10:50',
-                subject: 'Matematika'
-            },
-            {
-                num: 6,
-                time: '10:50-11:30',
-                subject: 'B. Indonesia'
-            },
-            {
-                num: 7,
-                time: '11:30-12:10',
-                subject: 'B. Indonesia'
-            },
-            {
-                num: 8,
-                time: '13:00-13:40',
-                subject: 'Olahraga'
-            },
-            {
-                num: 9,
-                time: '13:40-14:20',
-                subject: 'Olahraga'
-            },
-            {
-                num: 10,
-                time: '14:20-15:00',
-                subject: 'Olahraga'
+        async function loadSchedule() {
+            try {
+                const response = await fetch("/api/jadwal");
+                const data = await response.json();
+
+                console.log(data); // debug
+
+                // update header tanggal & hari
+                document.getElementById("hariText").textContent = data.hari;
+                document.getElementById("tanggalText").textContent = data.tanggal;
+
+                // render daftar jadwal
+                renderSchedule(data.jadwal);
+
+                // cek mapel sekarang
+                if (data.jadwal.length > 0) {
+                    const now = new Date();
+                    const nowMinutes = now.getHours() * 60 + now.getMinutes(); // ubah ke menit
+
+                    let currentSchedule = null;
+
+                    data.jadwal.forEach(item => {
+                        if (item.waktu?.jam_mulai && item.waktu?.jam_selesai) {
+                            const [h1, m1] = item.waktu.jam_mulai.split(":").map(Number);
+                            const [h2, m2] = item.waktu.jam_selesai.split(":").map(Number);
+
+                            const start = h1 * 60 + m1;
+                            const end = h2 * 60 + m2;
+
+                            if (nowMinutes >= start && nowMinutes <= end) {
+                                currentSchedule = item;
+                            }
+                        }
+                    });
+
+                    const sekarang = new Date();
+                    let j = sekarang.getHours();
+                    let mi = sekarang.getMinutes();
+                    j = j < 10 ? '0' + j : j;
+                    mi = mi < 10 ? '0' + mi : mi;
+                    jam_sekarang = j + ':' + mi;
+                    console.log(j);
+                    // console.log(last.waktu?.jam_selesai);
+
+                    if (currentSchedule) {
+                        document.getElementById("istirahat").style.display = "none";
+                        document.getElementById("penanggung").style.display = "none";
+                        document.getElementById("ruangan").style.display = "none";
+
+                        document.getElementById("fotoGuru").src =
+                            currentSchedule.guru?.foto ? `storage/${currentSchedule.guru.foto}` :
+                            'https://i.postimg.cc/7ZQQ64Q2/profile.jpg';
+
+                        document.getElementById("infoGuru").innerHTML =
+                            `<span class="icon icon-book"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
+
+                        document.getElementById("infoMapel").innerHTML =
+                            `<span class="icon icon-book"></span> ${currentSchedule.mapel?.nama_mapel ?? '-'}`;
+
+                        document.getElementById("infoRuangan").innerHTML =
+                            `<span class="icon icon-home"></span> ${currentSchedule.ruangan?.nama_ruangan ?? '-'}`;
+
+                        document.getElementById("infoWaktu").innerHTML =
+                            `<span class="icon icon-clock"></span> ${currentSchedule.waktu?.jam_mulai ?? '-'} - ${currentSchedule.waktu?.jam_selesai ?? '-'}`;
+                    } else if (j >= 15 || j < 7) {
+                        // fallback kalau ga ada pelajaran sekarang
+                        document.getElementById('fotoGuru').src = "storage/foto/penanggungJawab.jpg"
+                        document.getElementById("infoGuru").style.display = "none";
+                        document.getElementById("infoMapel").style.display = "none";
+                        document.getElementById("infoRuangan").style.display = "none";
+                        document.getElementById("infoWaktu").style.display = "none";
+
+                        document.getElementById("istirahat").style.display = "block";
+                        document.getElementById("penanggung").style.display = "block";
+                        document.getElementById("ruangan").style.display = "block";
+                    }
+                }
+
+            } catch (error) {
+                console.error("Gagal ambil data jadwal:", error);
             }
-        ];
+        }
 
-        // Fungsi render jadwal ke .right-panel
-        function renderSchedule() {
+
+        function renderSchedule(schedule) {
             const scheduleList = document.getElementById('scheduleList');
-            scheduleList.innerHTML = ''; // clear dulu
+            scheduleList.innerHTML = '';
 
-            schedule.forEach(item => {
+            schedule.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.classList.add('schedule-item');
 
                 div.innerHTML = `
-        <div class="schedule-num">${item.num}</div>
-        <div class="schedule-time">${item.time}</div>
-        <div class="schedule-subject">${item.subject}</div>
-        `;
+                    <div class="schedule-num">${index + 1}</div>
+                    <div class="schedule-time">${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}</div>
+                    <div class="schedule-subject">${item.mapel?.kode_mapel ?? '-'}</div>
+                `;
                 scheduleList.appendChild(div);
             });
         }
 
-        // Fungsi jam digital realtime
+        // Jam digital realtime
         function updateClock() {
             const clock = document.getElementById('digitalClock');
             const now = new Date();
             let h = now.getHours();
             let m = now.getMinutes();
-            let s = now.getSeconds();
-
             h = h < 10 ? '0' + h : h;
             m = m < 10 ? '0' + m : m;
-
             clock.textContent = h + ':' + m;
         }
+
+        // Sidebar toggle
         const burgerMenu = document.getElementById('burgerMenu');
         const sidebar = document.getElementById('sidebar');
 
         burgerMenu.onclick = function() {
-            if (sidebar.style.width === '250px') {
-                sidebar.style.width = '0';
-            } else {
-                sidebar.style.width = '250px';
-            }
+            sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
         };
 
         function closeSidebar() {
             sidebar.style.width = '0';
         }
 
-
         // Init
-        renderSchedule();
+        loadSchedule();
         updateClock();
-        setInterval(updateClock, 1000); // update tiap detik
+        setInterval(updateClock, 1000);
     </script>
-
 </body>
 
 </html>

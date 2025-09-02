@@ -16,61 +16,61 @@ class MapelSeeder extends Seeder
         DB::table('mapels')->insert([
             [
                 'nama_mapel' => 'Matematika',
-                'kode_mapel' => 'MATH01',
+                'kode_mapel' => 'MATH',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Bahasa Indonesia',
-                'kode_mapel' => 'INDO01',
+                'kode_mapel' => 'INDO',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Bahasa Inggris',
-                'kode_mapel' => 'ENG01',
+                'kode_mapel' => 'ENG',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Ilmu Pengetahuan Alam',
-                'kode_mapel' => 'IPA01',
+                'kode_mapel' => 'IPA',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Ilmu Pengetahuan Sosial',
-                'kode_mapel' => 'IPS01',
+                'kode_mapel' => 'IPS',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Pendidikan Kewarganegaraan',
-                'kode_mapel' => 'PKN01',
+                'kode_mapel' => 'PKN',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Seni Budaya',
-                'kode_mapel' => 'SENI01',
+                'kode_mapel' => 'SENI',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Pendidikan Jasmani',
-                'kode_mapel' => 'PJOK01',
+                'kode_mapel' => 'PJOK',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Kimia',
-                'kode_mapel' => 'KIM01',
+                'kode_mapel' => 'KIM',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_mapel' => 'Fisika',
-                'kode_mapel' => 'FIS01',
+                'kode_mapel' => 'FIS',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

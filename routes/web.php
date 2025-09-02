@@ -7,14 +7,15 @@ use App\Http\Controllers\{
     GuruController,
     MapelController,
     RuanganController,
+    JadwalController,
 };
 
-Route::get('/', function () {
+Route::get('/', [JadwalController::class, 'tampil'])->name('welcome');
+Route::get('/api/jadwal', [JadwalController::class, 'index']);
+
+Route::get('/dashboard', function () {
     return view('coba');
 })->name('dashboard');
-Route::get('/welcome', function () {
-    return view('welcome');
-})->name('welcome');
 
 Route::controller(GuruController::class)->group(function(){
     Route::get('/guru', 'index')->name('guru.index');
