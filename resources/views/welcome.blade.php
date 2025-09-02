@@ -17,13 +17,15 @@
             /* biru muda */
             font-family: 'Arial Black', Arial, sans-serif;
             color: black;
+            height: 100vh;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1280px;
             margin: 20px auto;
             display: flex;
             gap: 20px;
+            height: calc(100vh - 100px);
         }
 
         /* KIRI: Profil & data */
@@ -31,7 +33,7 @@
             background: white;
             border-radius: 20px;
             padding: 15px;
-            width: 55%;
+            width: 65%;
             display: flex;
             flex-direction: column;
         }
@@ -88,13 +90,14 @@
             display: flex;
             gap: 20px;
             margin-bottom: 15px;
+            height: auto;
         }
 
         .profile-img {
             border: 2px solid black;
             border-radius: 15px;
-            width: 200px;
-            height: 200px;
+            width: ;
+            height: 100%;
             overflow: hidden;
         }
 
@@ -112,6 +115,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 12px;
+            /* height: 100%; */
         }
 
         .info-box {
@@ -175,7 +179,7 @@
             border-radius: 20px;
             border: 2px solid black;
             padding: 15px 20px;
-            width: 40%;
+            width: 30%;
         }
 
         .schedule-item {
@@ -390,6 +394,7 @@
             const now = new Date();
             let h = now.getHours();
             let m = now.getMinutes();
+            let s = now.getSeconds();
 
             h = h < 10 ? '0' + h : h;
             m = m < 10 ? '0' + m : m;
