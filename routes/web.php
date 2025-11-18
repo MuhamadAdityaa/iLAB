@@ -17,6 +17,15 @@ Route::get('/dashboard', function () {
     return view('coba');
 })->name('dashboard');
 
+Route::controller(JadwalController::class)->group(function(){
+    Route::get('/jadwal', 'indexAdmin')->name('jadwal.index');
+    Route::get('/jadwal/create', 'create')->name('jadwal.create');
+    Route::post('/jadwal/store', 'store')->name('jadwal.store');
+    Route::get('/jadwal/{id}/edit', 'edit')->name('jadwal.edit.show');
+    Route::post('/jadwal/{id}/update', 'update')->name('jadwal.update');
+    Route::delete('/jadwal/{id}/delete', 'destroy')->name('jadwal.delete');
+});
+
 Route::controller(GuruController::class)->group(function(){
     Route::get('/guru', 'index')->name('guru.index');
     Route::get('/guru/create', 'create')->name('guru.create');

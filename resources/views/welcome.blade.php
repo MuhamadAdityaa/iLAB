@@ -16,7 +16,7 @@
             background: #add8e6;
             font-family: 'Arial Black', Arial, sans-serif;
             color: black;
-            height: 100vh;
+            height: 90vh;
         }
 
         .container {
@@ -65,7 +65,7 @@
             gap: 15px;
         }
 
-        .logo-box {
+        /* .logo-box {
             width: 50px;
             height: 50px;
             background: #004080;
@@ -79,7 +79,26 @@
             color: white;
             font-weight: bold;
             text-align: center;
+        } */
+
+        .logo-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid black;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
 
         /* Profil section */
         .profile-section {
@@ -260,19 +279,28 @@
     <div class="container">
         <section class="left-panel">
             <div class="header-top">
-                <div class="burger-menu" id="burgerMenu" title="Menu">
+                {{-- <div class="burger-menu" id="burgerMenu" title="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </div> --}}
+                <a class='burger-menu'id='burgerMenu' title="menu" href='{{ route('dashboard') }}'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
 
                 <div class="tanggal">
                     <span id="hariText">-</span>
                     <span id="tanggalText">-</span>
                 </div>
                 <div class="logos">
-                    <div class="logo-box" title="SMK">SMK</div>
-                    <div class="logo-box" title="Label">Label</div>
+                    <div class="logo-box" title="SMK">
+                        <img src="{{ asset('storages/icon/smk.jpg') }}" alt="Logo SMKN 1 Karawang">
+                    </div>
+                    <div class="logo-box" title="Label">
+                        <img src="{{ asset('storages/icon/pplg.jpg') }}" alt="Logo Jurusan">
+                    </div>
                 </div>
             </div>
 
@@ -300,14 +328,16 @@
         </section>
     </div>
 
-    <div id="sidebar"
+    {{-- <div id="sidebar"
         style="height: 100vh;width: 0;position: fixed;top: 0;left: 0;background-color: #007ACC;overflow-x: hidden;transition: 0.3s;padding-top: 60px;color: white;z-index: 999;">
         <a href="#" onclick="closeSidebar()" style="padding: 8px 32px; text-decoration:none; color: white;">Close
             ×</a>
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 1</a>
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 2</a>
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 3</a>
-    </div>
+    </div> --}}
+
+
 
     <script>
         async function loadSchedule() {
@@ -360,7 +390,7 @@
                         document.getElementById("ruangan").style.display = "none";
 
                         document.getElementById("fotoGuru").src =
-                            currentSchedule.guru?.foto ? `storage/${currentSchedule.guru.foto}` :
+                            currentSchedule.guru?.foto ? `storages/${currentSchedule.guru.foto}` :
                             'https://i.postimg.cc/7ZQQ64Q2/profile.jpg';
 
                         document.getElementById("infoGuru").innerHTML =
@@ -385,6 +415,12 @@
                         document.getElementById("istirahat").style.display = "block";
                         document.getElementById("penanggung").style.display = "block";
                         document.getElementById("ruangan").style.display = "block";
+                    } else {
+                        document.getElementById('fotoGuru').src = "storage/foto/penanggung.jpg"
+                        document.getElementById("infoGuru").style.display = "none";
+                        document.getElementById("infoMapel").style.display = "none";
+                        document.getElementById("infoRuangan").style.display = "none";
+                        document.getElementById("infoWaktu").style.display = "none";
                     }
                 }
 
@@ -438,6 +474,7 @@
         loadSchedule();
         updateClock();
         setInterval(updateClock, 1000);
+        setInterval(loadSchedule, 60000);
     </script>
 </body>
 

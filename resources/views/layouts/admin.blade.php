@@ -100,7 +100,7 @@
         <a href="{{ route('mapel.index') }}" class="nav-link {{ request()->routeIs('mapel.*') ? 'active' : '' }}">
             <i class="fas fa-book"></i> Mata Pelajaran
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('jadwal.index') }}" class="nav-link">
             <i class="fas fa-clock"></i> Jadwal
         </a>
         <a href="{{ route('ruangan.index') }}" class="nav-link {{ request()->routeIs('ruangan.*') ? 'active' : '' }}">
