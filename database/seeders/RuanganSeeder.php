@@ -44,26 +44,6 @@ class RuanganSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'nama_ruangan' => 'Lab 7',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_ruangan' => 'Lab 8',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_ruangan' => 'Lab 9',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_ruangan' => 'Lab 10',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
         ]);
 
     }

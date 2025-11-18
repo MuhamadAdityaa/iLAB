@@ -378,10 +378,6 @@
                     const sekarang = new Date();
                     let j = sekarang.getHours();
                     let mi = sekarang.getMinutes();
-                    j = j < 10 ? '0' + j : j;
-                    mi = mi < 10 ? '0' + mi : mi;
-                    jam_sekarang = j + ':' + mi;
-                    console.log(j);
                     // console.log(last.waktu?.jam_selesai);
 
                     if (currentSchedule) {
@@ -416,7 +412,7 @@
                         document.getElementById("penanggung").style.display = "block";
                         document.getElementById("ruangan").style.display = "block";
                     } else {
-                        document.getElementById('fotoGuru').src = "storage/foto/penanggung.jpg"
+                        document.getElementById('fotoGuru').src = "storage/foto/penanggungJawab.jpg"
                         document.getElementById("infoGuru").style.display = "none";
                         document.getElementById("infoMapel").style.display = "none";
                         document.getElementById("infoRuangan").style.display = "none";

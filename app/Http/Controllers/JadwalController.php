@@ -17,11 +17,12 @@ use Carbon\Carbon;
 class JadwalController extends Controller
 {
     public function tampil(){
+        $selectedKelasId = 1;
         $hariSekarang = Carbon::now()->locale('id')->dayName;
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
         $jadwal = Jadwal::with(['mapel','guru','ruangan','waktu'])
-            ->where('hari_id', $hari->id)
+            ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
 
             // dd($jadwal);
@@ -29,11 +30,12 @@ class JadwalController extends Controller
     }
 
     public function index() {
+        $selectedKelasId = 1;
         $hariSekarang = Carbon::now()->locale('id')->dayName;
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
         $jadwal = Jadwal::with(['guru', 'mapel', 'ruangan', 'waktu', 'kelas'])
-            ->where('hari_id', $hari->id)
+            ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
 
         return response()->json([
@@ -41,6 +43,7 @@ class JadwalController extends Controller
             'hari' => $hariSekarang,
             'tanggal' => $date,
         ]);
+
     }
 
     public function indexAdmin() {
