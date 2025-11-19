@@ -16,8 +16,9 @@ use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
-    public function tampil(){
-        $selectedKelasId = 1;
+    public function tampil($id) {
+        $selectedKelasId = $id;
+        $kelas = Kelas::FindorFail($id);
         $hariSekarang = Carbon::now()->locale('id')->dayName;
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
@@ -26,17 +27,19 @@ class JadwalController extends Controller
             ->get();
 
             // dd($jadwal);
-        return view('welcome', compact('jadwal', 'hariSekarang', 'date'));
+        return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId'));
     }
 
-    public function index() {
-        $selectedKelasId = 1;
+    public function index($id) {
+        $selectedKelasId = $id;
         $hariSekarang = Carbon::now()->locale('id')->dayName;
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
         $jadwal = Jadwal::with(['guru', 'mapel', 'ruangan', 'waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
+
+        // dd($jadwal);
 
         return response()->json([
             'jadwal' => $jadwal,

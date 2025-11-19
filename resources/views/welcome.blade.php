@@ -275,7 +275,6 @@
 </head>
 
 <body>
-
     <div class="container">
         <section class="left-panel">
             <div class="header-top">
@@ -311,7 +310,7 @@
                 <div class="info-boxes">
                     <h1 class="istirahat" id="istirahat">Tidak Ada Aktivitas</h1>
                     <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab: Saka Lawrance</span></h1>
-                    <h1 class="infoLainnya" id="ruangan"><span>Lab 1</span></h1>
+                    <h1 class="infoLainnya" id="ruangan"><span>{{ $kelas->kelas }}</span></h1>
 
                     <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
                     <div class="info-box" id="infoMapel"><span class="icon icon-book"></span> -</div>
@@ -342,7 +341,10 @@
     <script>
         async function loadSchedule() {
             try {
-                const response = await fetch("/api/jadwal");
+                let kelas = {{ $selectedKelasId }}
+                console.log(`/api/jadwal/${kelas}`)
+
+                const response = await fetch(`/api/jadwal/${kelas}`);
                 const data = await response.json();
 
                 console.log(data); // debug
@@ -385,8 +387,9 @@
                         document.getElementById("penanggung").style.display = "none";
                         document.getElementById("ruangan").style.display = "none";
 
+                        console.log(currentSchedule);
                         document.getElementById("fotoGuru").src =
-                            currentSchedule.guru?.foto ? `storages/${currentSchedule.guru.foto}` :
+                            currentSchedule.guru?.nama_guru ? `storage/${currentSchedule.guru.foto}` :
                             'https://i.postimg.cc/7ZQQ64Q2/profile.jpg';
 
                         document.getElementById("infoGuru").innerHTML =

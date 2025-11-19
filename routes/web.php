@@ -8,14 +8,17 @@ use App\Http\Controllers\{
     MapelController,
     RuanganController,
     JadwalController,
+    LoginController,
 };
 
-Route::get('/', [JadwalController::class, 'tampil'])->name('welcome');
-Route::get('/api/jadwal', [JadwalController::class, 'index']);
+// Route::get('/', [JadwalController::class, 'tampil'])->name('welcome');
+Route::get('/api/jadwal/{id}', [JadwalController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('coba');
 })->name('dashboard');
+
+Route::get('/', [LoginController::class, 'index'])->name('index');
 
 Route::controller(JadwalController::class)->group(function(){
     Route::get('/jadwal', 'indexAdmin')->name('jadwal.index');
@@ -24,6 +27,9 @@ Route::controller(JadwalController::class)->group(function(){
     Route::get('/jadwal/{id}/edit', 'edit')->name('jadwal.edit.show');
     Route::post('/jadwal/{id}/update', 'update')->name('jadwal.update');
     Route::delete('/jadwal/{id}/delete', 'destroy')->name('jadwal.delete');
+
+    Route::get('/jadwal/{id}/', 'tampil')->name('jadwal');
+    // Route::get('/api/jadwal/{id}', 'index')->name('api');
 });
 
 Route::controller(GuruController::class)->group(function(){

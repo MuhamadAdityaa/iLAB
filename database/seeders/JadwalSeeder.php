@@ -50,7 +50,7 @@ class JadwalSeeder extends Seeder
             ];
 
             foreach (range(1, 6) as $ruangan) {
-                
+
                 for ($i = 1; $i <= 10; $i++) {
                     $tempMapel = $mapelArr[array_rand($mapelArr)];
                     DB::table('jadwals')->insert([
@@ -59,7 +59,7 @@ class JadwalSeeder extends Seeder
                             'guru_id'    => $tempMapel,
                             'mapel_id'   => $tempMapel,
                             'ruangan_id' => $ruangan,
-                            'hari_id'    => 2,
+                            'hari_id'    => 3,
                             'waktu_id'   => $i,
                             'kelas_id'   => $ruangan,
                             'created_at' => now(),
