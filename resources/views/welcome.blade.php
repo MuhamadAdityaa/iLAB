@@ -7,6 +7,161 @@
     <title>Jadwal Pelajaran</title>
     <style>
         /* Reset */
+
+        :root {
+            --bg: #add8e6;
+            --card: #ffffff;
+            --primary: #7ec8f5;
+            --accent: #504f4e;
+            --muted: #6b7280;
+            --blk: #000000;
+        }
+
+        /* BURGER BUTTON */
+        .burger-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--card);
+            border: 2px solid var(--blk);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+        }
+
+        .burger-line {
+            width: 24px;
+            height: 3px;
+            background: var(--blk);
+            border-radius: 3px;
+            position: relative;
+            transition: .3s ease;
+        }
+
+        .burger-line::before,
+        .burger-line::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 3px;
+            background: var(--blk);
+            border-radius: 3px;
+            transition: .3s ease;
+        }
+
+        .burger-line::before {
+            top: -8px;
+        }
+
+        .burger-line::after {
+            top: 8px;
+        }
+
+        /* When active (X shape) */
+        .burger-btn.active .burger-line {
+            background: transparent;
+        }
+
+        .burger-btn.active .burger-line::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .burger-btn.active .burger-line::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
+            display: none;
+            z-index: 998;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 320px;
+            max-width: 80vw;
+            background: var(--card);
+            border-right: 3px solid var(--blk);
+            box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
+            padding: 22px;
+            transform: translateX(-100%);
+            transition: transform .35s ease;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: var(--blk);
+        }
+
+        /* Buttons */
+        .sidebar-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            appearance: none;
+            border: 0;
+            background: var(--primary);
+            color: var(--blk);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border: 2px solid var(--blk);
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform .12s ease;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 2px solid var(--blk);
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -250,12 +405,16 @@
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            width: 30px;
-            height: 25px;
+            width: 48px;
+            height: 48px;
             cursor: pointer;
             margin-right: 15px;
-        }
+            background: var(--card);
+            border: 2px solid var(--blk);
+            border-radius: 10px;
+            padding: 8px;
 
+        }
         .burger-menu span {
             display: block;
             height: 3px;
@@ -283,11 +442,18 @@
                     <span></span>
                     <span></span>
                 </div> --}}
-                <a class='burger-menu'id='burgerMenu' title="menu" href='{{ route('dashboard') }}'>
+                <a class='burger-menu'id='burgerMenu' title="menu" onclick="toggleSidebar()">
                     <span></span>
                     <span></span>
                     <span></span>
                 </a>
+                {{-- <!-- Burger Button -->
+                <div id="burgerBtn" class="burger-btn" onclick="toggleSidebar()">
+                    <div class="burger-line"></div>
+                </div> --}}
+
+                <!-- Overlay -->
+                <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
 
                 <div class="tanggal">
                     <span id="hariText">-</span>
@@ -335,6 +501,24 @@
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 2</a>
         <a href="#" style="padding: 8px 32px; text-decoration:none; color: white;">Menu 3</a>
     </div> --}}
+
+    <!-- Sidebar -->
+    <div id="sidebarPanel" class="sidebar">
+
+        <div class="sidebar-title">Pilih Ruangan</div>
+
+        <div class="sidebar-grid">
+            @foreach ($ruangan as $r)
+                <a class="option-btn" href="{{ route('jadwal', $r->id) }}">
+                    {{ $r->nama_ruangan }}
+                </a>
+            @endforeach
+        </div>
+
+        <a href="{{ route('login') }}" class="login-btn">
+            Login
+        </a>
+    </div>
 
 
 
@@ -458,15 +642,39 @@
         }
 
         // Sidebar toggle
-        const burgerMenu = document.getElementById('burgerMenu');
-        const sidebar = document.getElementById('sidebar');
+        // const burgerMenu = document.getElementById('burgerMenu');
+        // const sidebar = document.getElementById('sidebar');
 
-        burgerMenu.onclick = function() {
-            sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
-        };
+        // burgerMenu.onclick = function() {
+        //     sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
+        // };
+
+        // function closeSidebar() {
+        //     sidebar.style.width = '0';
+        // }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebarPanel');
+            const overlay = document.getElementById('sidebarOverlay');
+            const burger = document.getElementById('burgerBtn');
+
+            const isOpen = sidebar.classList.contains('active');
+
+            if (isOpen) {
+                sidebar.classList.remove('active');
+                overlay.style.display = 'none';
+                burger.classList.remove('active');
+            } else {
+                sidebar.classList.add('active');
+                overlay.style.display = 'block';
+                burger.classList.add('active');
+            }
+        }
 
         function closeSidebar() {
-            sidebar.style.width = '0';
+            document.getElementById('sidebarPanel').classList.remove('active');
+            document.getElementById('sidebarOverlay').style.display = 'none';
+            document.getElementById('burgerBtn').classList.remove('active');
         }
 
         // Init

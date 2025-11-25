@@ -106,6 +106,10 @@
         <a href="{{ route('ruangan.index') }}" class="nav-link {{ request()->routeIs('ruangan.*') ? 'active' : '' }}">
             <i class="fas fa-door-open"></i> Ruangan
         </a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        </form>
     </div>
 
     {{-- Main Content --}}

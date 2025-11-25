@@ -17,6 +17,7 @@ use Carbon\Carbon;
 class JadwalController extends Controller
 {
     public function tampil($id) {
+        $ruangan = Ruangan::all();
         $selectedKelasId = $id;
         $kelas = Kelas::FindorFail($id);
         $hariSekarang = Carbon::now()->locale('id')->dayName;
@@ -27,7 +28,7 @@ class JadwalController extends Controller
             ->get();
 
             // dd($jadwal);
-        return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId'));
+        return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId', 'ruangan'));
     }
 
     public function index($id) {

@@ -59,7 +59,7 @@ class JadwalSeeder extends Seeder
                             'guru_id'    => $tempMapel,
                             'mapel_id'   => $tempMapel,
                             'ruangan_id' => $ruangan,
-                            'hari_id'    => 3,
+                            'hari_id'    => 2,
                             'waktu_id'   => $i,
                             'kelas_id'   => $ruangan,
                             'created_at' => now(),

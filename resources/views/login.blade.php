@@ -14,7 +14,6 @@
             --bg: #add8e6; /* existing page background */
             --card: #ffffff;
             --primary: #7ec8f5; /* deep blue */
-            --primary-600: #095486;
             --accent: #504f4e; /* coral accent */
             --muted: #6b7280;
             --blk: #000000;
@@ -78,6 +77,7 @@
             justify-content:center;
             gap:8px;
             border: 2px solid var(--blk);
+            text-decoration: none;
         }
 
         .option-btn:active{ transform: translateY(1px); }
@@ -103,6 +103,10 @@
             cursor: pointer;
             box-shadow: 0 6px 18px rgba(255,127,80,0.18);
             transition: transform .12s ease, opacity .12s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-decoration: none;
 
         }
 
@@ -135,10 +139,8 @@
         </div>
 
         <div class="login-wrap">
-            <button class="login-btn" type="button">Login</button>
+            <a href="{{ route('login') }}" class="login-btn" type="button">Login</a>
         </div>
-
-        <div class="muted">Butuh bantuan? Hubungi admin.</div>
     </div>
 </body>
 
