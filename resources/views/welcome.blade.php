@@ -573,8 +573,7 @@
 
                         console.log(currentSchedule);
                         document.getElementById("fotoGuru").src =
-                            currentSchedule.guru?.nama_guru ? `storage/${currentSchedule.guru.foto}` :
-                            'https://i.postimg.cc/7ZQQ64Q2/profile.jpg';
+                            `../storage/${currentSchedule.guru.foto}`;
 
                         document.getElementById("infoGuru").innerHTML =
                             `<span class="icon icon-book"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
