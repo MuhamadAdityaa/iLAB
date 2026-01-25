@@ -21,31 +21,38 @@ class JadwalController extends Controller
         $selectedKelasId = $id;
         $kelas = Kelas::FindorFail($id);
         $hariSekarang = Carbon::now()->locale('id')->dayName;
+        // dd($hariSekarang);
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
+        // dd($hari);
         $jadwal = Jadwal::with(['mapel','guru','ruangan','waktu'])
-            ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
-            ->get();
-
-            // dd($jadwal);
-        return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId', 'ruangan'));
-    }
-
-    public function index($id) {
-        $selectedKelasId = $id;
-        $hariSekarang = Carbon::now()->locale('id')->dayName;
-        $date = Carbon::now()->translatedFormat('d F Y');
-        $hari = Hari::where('hari', $hariSekarang)->first();
-        $jadwal = Jadwal::with(['guru', 'mapel', 'ruangan', 'waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
 
         // dd($jadwal);
 
+            
+        return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId', 'ruangan'));
+    }
+
+    public function index($id) {
+        $selectedKelasId = $id;
+
+        $hariSekarang = Carbon::now()->locale('id')->dayName;
+        
+        $date = Carbon::now()->translatedFormat('d F Y');
+
+        $hari = Hari::where('hari', $hariSekarang)->first();
+        $jadwal = Jadwal::with(['guru', 'mapel', 'waktu', 'kelas'])
+            ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
+            ->get();
+        $ruangan = Ruangan::all()->where('id', $selectedKelasId);
+
         return response()->json([
             'jadwal' => $jadwal,
             'hari' => $hariSekarang,
             'tanggal' => $date,
+            'ruangan' => $ruangan,
         ]);
 
     }

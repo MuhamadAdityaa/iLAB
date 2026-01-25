@@ -69,6 +69,9 @@
             .navbar {
                 margin-left: 0;
             }
+        .custom-padding {
+            padding: 20px 12px;
+        }
         }
     </style>
 </head>
@@ -100,15 +103,15 @@
         <a href="{{ route('mapel.index') }}" class="nav-link {{ request()->routeIs('mapel.*') ? 'active' : '' }}">
             <i class="fas fa-book"></i> Mata Pelajaran
         </a>
-        <a href="{{ route('jadwal.index') }}" class="nav-link">
+        <a href="{{ route('jadwal.index') }}" class="nav-link {{ request()->routeIs('jadwal.*') ? 'active' : '' }}">
             <i class="fas fa-clock"></i> Jadwal
         </a>
         <a href="{{ route('ruangan.index') }}" class="nav-link {{ request()->routeIs('ruangan.*') ? 'active' : '' }}">
             <i class="fas fa-door-open"></i> Ruangan
         </a>
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST" class="p-3">
             @csrf
-            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+            <button type="submit" class="btn btn-danger justify-content-center">Logout</button>
         </form>
     </div>
 

@@ -19,6 +19,8 @@ class HariSeeder extends Seeder
             ['hari' => 'Rabu', 'created_at' => now(), 'updated_at' => now()],
             ['hari' => 'Kamis', 'created_at' => now(), 'updated_at' => now()],
             ['hari' => 'Jumat', 'created_at' => now(), 'updated_at' => now()],
+            ['hari' => 'Sabtu', 'created_at' => now(), 'updated_at' => now()],
+            ['hari' => 'Minggu', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

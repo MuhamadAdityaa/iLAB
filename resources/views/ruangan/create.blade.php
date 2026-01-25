@@ -28,9 +28,20 @@
 
             <div class="form-group">
                 <label for="nama_ruangan">Nama Ruangan</label>
-                <input id="nama_ruangan" type="nama_ruangan" class="form-control @error('nama_ruangan') is-invalid @enderror"
-                    name="nama_ruangan" value="{{ old('nama_ruangan') }}" autocomplete="nama_ruangan">
+                <input id="nama_ruangan" type="nama_ruangan"
+                    class="form-control @error('nama_ruangan') is-invalid @enderror" name="nama_ruangan"
+                    value="{{ old('nama_ruangan') }}" autocomplete="nama_ruangan">
                 @error('nama_ruangan')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="foto">Foto</label>
+                <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
+                    name="foto" value="{{ old('foto') }}" autocomplete="foto">
+                @error('foto')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

@@ -22,11 +22,20 @@ class RuanganController extends Controller
     public function store(Request $request) {
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
+            'penanggung_jawab' => 'required|string|max:255',
+            'foto_penanggung_jawab' => 'required|image|max:2048',
         ]);
+
+        $foto = $request->file('foto');
+        $filename = time() . '.' . $foto->getClientOriginalExtension();
+        $foto->move(public_path('storage/foto'), $filename);
+        $path = 'foto/' . $filename;
 
         Ruangan::create([
             'nama_ruangan' => $request->nama_ruangan,
-        ]);
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'foto_penanggung_jawab' => $path,
+            ]);
 
         return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil ditambahkan.');
     }

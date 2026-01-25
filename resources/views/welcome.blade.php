@@ -415,6 +415,7 @@
             padding: 8px;
 
         }
+
         .burger-menu span {
             display: block;
             height: 3px;
@@ -475,7 +476,7 @@
                 </div>
                 <div class="info-boxes">
                     <h1 class="istirahat" id="istirahat">Tidak Ada Aktivitas</h1>
-                    <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab: Saka Lawrance</span></h1>
+                    <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab:</span></h1>
                     <h1 class="infoLainnya" id="ruangan"><span>{{ $kelas->kelas }}</span></h1>
 
                     <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
@@ -588,7 +589,7 @@
                             `<span class="icon icon-clock"></span> ${currentSchedule.waktu?.jam_mulai ?? '-'} - ${currentSchedule.waktu?.jam_selesai ?? '-'}`;
                     } else if (j >= 15 || j < 7) {
                         // fallback kalau ga ada pelajaran sekarang
-                        document.getElementById('fotoGuru').src = "storage/foto/penanggungJawab.jpg"
+                        document.getElementById('fotoGuru').src = "../storage/foto/penanggungJawab.jpg"
                         document.getElementById("infoGuru").style.display = "none";
                         document.getElementById("infoMapel").style.display = "none";
                         document.getElementById("infoRuangan").style.display = "none";
@@ -596,16 +597,17 @@
 
                         document.getElementById("istirahat").style.display = "block";
                         document.getElementById("penanggung").style.display = "block";
+                        document.getElementById("penanggung").innerHTML = `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
                         document.getElementById("ruangan").style.display = "block";
-                    } else {
-                        document.getElementById('fotoGuru').src = "storage/foto/penanggungJawab.jpg"
-                        document.getElementById("infoGuru").style.display = "none";
-                        document.getElementById("infoMapel").style.display = "none";
-                        document.getElementById("infoRuangan").style.display = "none";
-                        document.getElementById("infoWaktu").style.display = "none";
                     }
-                }
 
+                } else {
+                    document.getElementById('fotoGuru').src = "../storage/foto/penanggungJawab.jpg"
+                    document.getElementById("infoGuru").style.display = "none";
+                    document.getElementById("infoMapel").style.display = "none";
+                    document.getElementById("infoRuangan").style.display = "none";
+                    document.getElementById("infoWaktu").style.display = "none";
+                }
             } catch (error) {
                 console.error("Gagal ambil data jadwal:", error);
             }

@@ -3,9 +3,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <h2 class="mb-4">Kamera Lab</h2>
+        <h2 class="mb-4">Selamat Datang di ILab</h2>
 
-        <div class="row">
+        {{-- <div class="row">
             @for ($i = 1; $i <= 6; $i++)
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
@@ -22,10 +22,10 @@
                     </div>
                 </div>
             @endfor
-        </div>
+        </div> --}}
     </div>
 
-    <script>
+    {{-- <script>
         // store active MediaStream per tile
         const streams = {};
 
@@ -78,5 +78,5 @@
                 if (btn) btn.addEventListener('click', function () { toggleCamera(i); });
             }
         });
-    </script>
+    </script> --}}
 @endsection

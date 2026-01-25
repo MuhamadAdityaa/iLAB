@@ -17,6 +17,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
+
 Route::get('/jadwal/{id}/', [JadwalController::class, 'tampil'])->name('jadwal');
 
 // Admin Routes
