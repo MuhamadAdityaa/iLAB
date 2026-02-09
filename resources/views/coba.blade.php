@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 
+@section('header')
+    <h1>Dashboard ILab</h1>
+@endsection
 
 @section('content')
     <div class="container-fluid">

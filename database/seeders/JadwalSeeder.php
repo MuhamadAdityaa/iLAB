@@ -42,21 +42,20 @@ class JadwalSeeder extends Seeder
         //     }
         // }
 
-        $mapelArr = [
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        $guruArr = [
+            1, 2, 3, 4, 5,
         ];
 
-        foreach (range(1, 6) as $ruangan) {
+        foreach (range(1, 5) as $ruangan) {
 
             for ($i = 1; $i <= 10; $i++) {
-                $tempMapel = $mapelArr[array_rand($mapelArr)];
+                $tempGuru = $guruArr[array_rand($guruArr)];
                 DB::table('jadwals')->insert([
                     // Senin
                     [
-                        'guru_id' => $tempMapel,
-                        'mapel_id' => $tempMapel,
+                        'guru_id' => $tempGuru,
                         'ruangan_id' => $ruangan,
-                        'hari_id' => 3,
+                        'hari_id' => 1,
                         'waktu_id' => $i,
                         'kelas_id' => $ruangan,
                         'created_at' => now(),
@@ -155,19 +154,19 @@ class JadwalSeeder extends Seeder
                 ]);
             }
         }
-        for ($i = 1; $i <= 10; $i++) {
-            DB::table('jadwals')->insert([
-                [
-                    'guru_id' => 2,
-                    'mapel_id' => 4,
-                    'ruangan_id' => 1,
-                    'hari_id' => 1,
-                    'waktu_id' => $i,
-                    'kelas_id' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
-        }
+        // for ($i = 1; $i <= 10; $i++) {
+        //     DB::table('jadwals')->insert([
+        //         [
+        //             'guru_id' => 2,
+        //             'mapel_id' => 4,
+        //             'ruangan_id' => 1,
+        //             'hari_id' => 1,
+        //             'waktu_id' => $i,
+        //             'kelas_id' => 1,
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //         ],
+        //     ]);
+        // }
     }
 }

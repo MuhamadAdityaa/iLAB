@@ -11,8 +11,8 @@ class Mapel extends Model
         'kode_mapel'
     ];
 
-    public function jadwals() {
-        return $this->hasMany(Jadwal::class);
+    public function gurus() {
+        return $this->hasMany(Guru::class);
     }
 
 }

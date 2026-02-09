@@ -2,12 +2,13 @@
 
 @section('header')
     <h1>Tambah Data Ruangan</h1>
+    <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">
+        ← Kembali ke Daftar Ruangan
+    </a>
 @endsection
 
 @section('content')
-    <div class="container mt-5">
-        <h2 class="mb-4">Tambah Data Ruangan</h2>
-
+    <div class="container mt-4">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -38,7 +39,18 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="foto">Foto</label>
+                <label for="penanggung_jawab">Guru Penanggung Jawab</label>
+                <input id="penanggung_jawab" type="penanggung_jawab"
+                    class="form-control @error('penanggung_jawab') is-invalid @enderror" name="penanggung_jawab"
+                    value="{{ old('penanggung_jawab') }}" autocomplete="penanggung_jawab">
+                @error('penanggung_jawab')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group mt-3">
+                <label for="foto">Foto Guru Penanggung Jawab</label><br></br>
                 <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
                     name="foto" value="{{ old('foto') }}" autocomplete="foto">
                 @error('foto')

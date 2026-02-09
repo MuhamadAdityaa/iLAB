@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             // Relasi ke guru, mapel, ruangan
             $table->foreignId('guru_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('mapel_id')->constrained()->cascadeOnDelete();
             $table->foreignId('ruangan_id')->constrained()->cascadeOnDelete();
 
             // Relasi ke hari & jam

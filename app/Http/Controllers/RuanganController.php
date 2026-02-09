@@ -7,7 +7,7 @@ use App\Models\Ruangan;
 
 class RuanganController extends Controller
 {
-    
+
 
     public function index(){
         $ruangan = Ruangan::all();
@@ -23,8 +23,10 @@ class RuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
-            'foto_penanggung_jawab' => 'required|image|max:2048',
+            'foto' => 'required|image|mimes:jpg,jpeg,png,webp',
         ]);
+
+        // dd($request->penanggung_jawab);
 
         $foto = $request->file('foto');
         $filename = time() . '.' . $foto->getClientOriginalExtension();
@@ -35,27 +37,53 @@ class RuanganController extends Controller
             'nama_ruangan' => $request->nama_ruangan,
             'penanggung_jawab' => $request->penanggung_jawab,
             'foto_penanggung_jawab' => $path,
-            ]);
+        ]);
 
         return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil ditambahkan.');
     }
 
     public function edit($id) {
         $ruangan = Ruangan::findOrFail($id);
+
         return view('ruangan.edit', compact('ruangan'));
     }
 
     public function update(Request $request, $id) {
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
+            'penanggung_jawab' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ]);
+
+        if ( $request->hasFile('foto') ) {
+            $foto = $request->file('foto');
+            $filename = time() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('storage/foto'), $filename);
+            $path = 'foto/' . $filename;
+
+            $ruangan = Ruangan::findOrFail($id);
+            $ruangan->update([
+                'nama_ruangan' => $request->nama_ruangan,
+                'penanggung_jawab' => $request->penanggung_jawab,
+                'foto_penanggung_jawab' => $path,
+            ]);
+
+            return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil diperbarui.');
+        }
 
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->update([
             'nama_ruangan' => $request->nama_ruangan,
+            'penanggung_jawab' => $request->penanggung_jawab,
         ]);
 
         return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil diperbarui.');
+    }
+
+    public function detail($id) {
+        $ruangan = Ruangan::findOrFail($id);
+
+        return view('ruangan.detail', compact('ruangan'));
     }
 
     public function destroy($id) {

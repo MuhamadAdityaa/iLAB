@@ -22,8 +22,10 @@
                         <tr>
                             <td>{{ $r->id }}</td>
                             <td>{{ $r->nama_ruangan }}</td>
+                            <td>{{ $r->penanggung_jawab }}</td>
                             <td>
                                 <a href="{{ route('ruangan.edit.show', $r->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('ruangan.detail', $r->id) }}" class="btn btn-info">Detail</a>
                                 <form action="{{ route('ruangan.delete', $r->id) }}" method="POST"
                                     style="display:inline-block;">
                                     @csrf

@@ -2,11 +2,13 @@
 
 @section('header')
     <h1>Edit Data Ruangan</h1>
+    <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">
+        ← Kembali ke Daftar Ruangan
+    </a>
 @endsection
 
 @section('content')
-    <div class="container mt-5">
-        <h2 class="mb-4">Edit Data Ruangan</h2>
+    <div class="container mt-4">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -28,8 +30,9 @@
 
             <div class="form-group">
                 <label for="nama_ruangan">Nama Ruangan</label>
-                <input id="nama_ruangan" type="nama_ruangan" class="form-control @error('nama_ruangan') is-invalid @enderror"
-                    name="nama_ruangan" value="{{ $ruangan->nama_ruangan }}" autocomplete="nama_ruangan">
+                <input id="nama_ruangan" type="nama_ruangan"
+                    class="form-control @error('nama_ruangan') is-invalid @enderror" name="nama_ruangan"
+                    value="{{ $ruangan->nama_ruangan }}" autocomplete="nama_ruangan">
                 @error('nama_ruangan')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -37,8 +40,31 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="penanggung_jawab">Penanggung Jawab</label>
+                <input id="penanggung_jawab" type="penanggung_jawab"
+                    class="form-control @error('penanggung_jawab') is-invalid @enderror" name="penanggung_jawab"
+                    value="{{ $ruangan->penanggung_jawab }}" autocomplete="penanggung_jawab">
+                @error('penanggung_jawab')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="foto">Foto Guru Penanggung Jawab</label><br></br>
+                <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
+                    name="foto" value="{{ old('foto') }}" autocomplete="foto">
+                @error('foto')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
             <div class="mt-4">
-                <a href="{{ route('mapel.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

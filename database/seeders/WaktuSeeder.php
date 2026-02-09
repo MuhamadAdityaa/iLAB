@@ -24,6 +24,7 @@ class WaktuSeeder extends Seeder
             ['jam_ke' => 8, 'jam_mulai' => '13:00:00', 'jam_selesai' => '13:40:00'],
             ['jam_ke' => 9, 'jam_mulai' => '13:40:00', 'jam_selesai' => '14:20:00'],
             ['jam_ke' => 10, 'jam_mulai' => '14:20:00', 'jam_selesai' => '15:00:00'],
+            // ['jam_ke' => 11, 'jam_mulai' => '00:00:00', 'jam_selesai' => '23:59:00'],
         ]);
     }
 }

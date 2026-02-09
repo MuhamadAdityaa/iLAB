@@ -2,12 +2,13 @@
 
 @section('header')
     <h1>Tambah Mata Pelajaran</h1>
+    <a href="{{ route('mapel.index') }}" class="btn btn-secondary">
+        ← Kembali ke Daftar Mata Pelajaran
+    </a>
 @endsection
 
 @section('content')
-    <div class="container mt-5">
-        <h2 class="mb-4">Tambah Data Mata Pelajaran</h2>
-
+    <div class="container mt-4">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif

@@ -17,6 +17,11 @@
             --blk: #000000;
         }
 
+        .schedule-num.active {
+            background: #7ec8f5;
+        }
+
+
         /* BURGER BUTTON */
         .burger-btn {
             width: 48px;
@@ -143,8 +148,25 @@
             transition: transform .12s ease;
         }
 
+        .option-btn-active {
+            appearance: none;
+            border: 0;
+            background: var(--card);
+            color: var(--blk);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border: 2px solid var(--blk);
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform .12s ease;
+        }
+
         .option-btn:hover {
             transform: translateY(-2px);
+            background: var(--card);
         }
 
         .login-btn {
@@ -176,6 +198,7 @@
 
         .container {
             max-width: 1280px;
+            /* flex: 1; */
             margin: 20px auto;
             display: flex;
             gap: 20px;
@@ -184,13 +207,21 @@
 
         /* KIRI: Profil & data */
         .left-panel {
-            background: white;
-            border-radius: 20px;
-            padding: 15px;
-            width: 65%;
+            background: var(--card);
+            padding: 20px;
+            margin-right: 10px;
+            width: 100%;
+            margin-left: 10px;
             display: flex;
             flex-direction: column;
+            height: 100%;
+            border-radius: 20px;
         }
+
+        .left-content {
+            flex: 1;
+        }
+
 
         /* Header atas */
         .header-top {
@@ -266,8 +297,9 @@
         .profile-img {
             border: 2px solid black;
             border-radius: 15px;
-            width: 40%;
-            height: 100%;
+            flex: 0 0 35%;
+            max-width: 420px;
+            aspect-ratio: 3 / 4;
             overflow: hidden;
         }
 
@@ -275,11 +307,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
         .info-boxes {
-            flex-grow: 1;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -329,7 +360,7 @@
 
         /* Jam Digital */
         .clock-box {
-            margin-top: auto;
+            /* margin-top: 40px; */
             background: white;
             border: 2px solid black;
             border-radius: 15px;
@@ -346,7 +377,7 @@
             border-radius: 20px;
             border: 2px solid black;
             padding: 15px 20px;
-            width: 30%;
+            width: 40%;
         }
 
         .schedule-item {
@@ -435,54 +466,57 @@
 </head>
 
 <body>
-    <div class="container">
-        <section class="left-panel">
-            <div class="header-top">
-                {{-- <div class="burger-menu" id="burgerMenu" title="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div> --}}
-                <a class='burger-menu'id='burgerMenu' title="menu" onclick="toggleSidebar()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </a>
-                {{-- <!-- Burger Button -->
-                <div id="burgerBtn" class="burger-btn" onclick="toggleSidebar()">
-                    <div class="burger-line"></div>
-                </div> --}}
+    <div class="container" id="container">
+        <section class="left-panel" id="leftPanel">
+            <div class="left-content">
+                <div class="header-top">
+                    {{-- <div class="burger-menu" id="burgerMenu" title="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div> --}}
+                    <a class='burger-menu'id='burgerMenu' title="menu" onclick="toggleSidebar()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                    {{-- <!-- Burger Button -->
+                    <div id="burgerBtn" class="burger-btn" onclick="toggleSidebar()">
+                        <div class="burger-line"></div>
+                    </div> --}}
 
-                <!-- Overlay -->
-                <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+                    <!-- Overlay -->
+                    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
 
-                <div class="tanggal">
-                    <span id="hariText">-</span>
-                    <span id="tanggalText">-</span>
-                </div>
-                <div class="logos">
-                    <div class="logo-box" title="SMK">
-                        <img src="{{ asset('storages/icon/smk.jpg') }}" alt="Logo SMKN 1 Karawang">
+                    <div class="tanggal">
+                        <span id="hariText">-</span>
+                        <span id="tanggalText">-</span>
                     </div>
-                    <div class="logo-box" title="Label">
-                        <img src="{{ asset('storages/icon/pplg.jpg') }}" alt="Logo Jurusan">
+                    <div class="logos">
+                        <div class="logo-box" title="SMK">
+                            <img src="{{ asset('storages/icon/smk.jpg') }}" alt="Logo SMKN 1 Karawang">
+                        </div>
+                        <div class="logo-box" title="Label">
+                            <img src="{{ asset('storages/icon/pplg.jpg') }}" alt="Logo Jurusan">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="profile-section">
-                <div class="profile-img">
-                    <img src="https://i.postimg.cc/7ZQQ64Q2/profile.jpg" alt="Foto Profil" id="fotoGuru" />
-                </div>
-                <div class="info-boxes">
-                    <h1 class="istirahat" id="istirahat">Tidak Ada Aktivitas</h1>
-                    <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab:</span></h1>
-                    <h1 class="infoLainnya" id="ruangan"><span>{{ $kelas->kelas }}</span></h1>
+                <div class="profile-section">
+                    <div class="profile-img">
+                        <img src="https://i.postimg.cc/7ZQQ64Q2/profile.jpg" alt="Foto Profil" id="fotoGuru" />
+                    </div>
+                    <div class="info-boxes">
+                        <h1 class="istirahat" id="istirahat">Tidak Ada Aktivitas</h1>
+                        <h1 class="infoLainnya" id="penanggung"><span>Penanggung Jawab:</span></h1>
+                        <h1 class="infoLainnya" id="ruangan"><span></span></h1>
+                        <div class="clock-box" id="digitalClock2">--:--</div>
 
-                    <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
-                    <div class="info-box" id="infoMapel"><span class="icon icon-book"></span> -</div>
-                    <div class="info-box" id="infoRuangan"><span class="icon icon-home"></span> -</div>
-                    <div class="info-box" id="infoWaktu"><span class="icon icon-clock"></span> -</div>
+                        <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
+                        <div class="info-box" id="infoMapel"><span class="icon icon-book"></span> -</div>
+                        <div class="info-box" id="infoRuangan"><span class="icon icon-home"></span> -</div>
+                        <div class="info-box" id="infoWaktu"><span class="icon icon-clock"></span> -</div>
+                    </div>
                 </div>
             </div>
 
@@ -510,7 +544,8 @@
 
         <div class="sidebar-grid">
             @foreach ($ruangan as $r)
-                <a class="option-btn" href="{{ route('jadwal', $r->id) }}">
+                <a class="{{ request()->routeIs('jadwal') && request()->route('id') == $r->id ? 'option-btn-active' : 'option-btn ' }}"
+                    href="{{ route('jadwal', $r->id) }}">
                     {{ $r->nama_ruangan }}
                 </a>
             @endforeach
@@ -571,6 +606,7 @@
                         document.getElementById("istirahat").style.display = "none";
                         document.getElementById("penanggung").style.display = "none";
                         document.getElementById("ruangan").style.display = "none";
+                        document.getElementById("digitalClock2").style.display = "none";
 
                         console.log(currentSchedule);
                         document.getElementById("fotoGuru").src =
@@ -580,16 +616,17 @@
                             `<span class="icon icon-book"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
 
                         document.getElementById("infoMapel").innerHTML =
-                            `<span class="icon icon-book"></span> ${currentSchedule.mapel?.nama_mapel ?? '-'}`;
+                            `<span class="icon icon-book"></span> ${currentSchedule.guru.mapel?.nama_mapel ?? '-'}`;
 
                         document.getElementById("infoRuangan").innerHTML =
-                            `<span class="icon icon-home"></span> ${currentSchedule.ruangan?.nama_ruangan ?? '-'}`;
+                            `<span class="icon icon-home"></span> ${data.ruangan[0]?.nama_ruangan ?? '-'}`;
 
                         document.getElementById("infoWaktu").innerHTML =
                             `<span class="icon icon-clock"></span> ${currentSchedule.waktu?.jam_mulai ?? '-'} - ${currentSchedule.waktu?.jam_selesai ?? '-'}`;
                     } else if (j >= 15 || j < 7) {
                         // fallback kalau ga ada pelajaran sekarang
-                        document.getElementById('fotoGuru').src = "../storage/foto/penanggungJawab.jpg"
+                        document.getElementById('fotoGuru').src =
+                            `../storage/${data.ruangan[0]?.foto_penanggung_jawab ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
                         document.getElementById("infoGuru").style.display = "none";
                         document.getElementById("infoMapel").style.display = "none";
                         document.getElementById("infoRuangan").style.display = "none";
@@ -597,43 +634,105 @@
 
                         document.getElementById("istirahat").style.display = "block";
                         document.getElementById("penanggung").style.display = "block";
-                        document.getElementById("penanggung").innerHTML = `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
+                        document.getElementById("penanggung").innerHTML =
+                            `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
                         document.getElementById("ruangan").style.display = "block";
+                        document.getElementById("ruangan").innerHTML =
+                            `<span>${data.ruangan[0]?.nama_ruangan ?? '-'}</span>`;
+                        document.getElementById("digitalClock2").style.display = "none";
                     }
 
                 } else {
-                    document.getElementById('fotoGuru').src = "../storage/foto/penanggungJawab.jpg"
+                    document.getElementById('fotoGuru').src =
+                        `../storage/${data.ruangan[0]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
                     document.getElementById("infoGuru").style.display = "none";
+                    document.getElementById("penanggung").innerHTML =
+                        `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
                     document.getElementById("infoMapel").style.display = "none";
                     document.getElementById("infoRuangan").style.display = "none";
                     document.getElementById("infoWaktu").style.display = "none";
+                    document.getElementById("scheduleList").style.display = "none";
+                    document.getElementById("digitalClock").style.display = "none";
+                    document.getElementById("ruangan").innerHTML =
+                        `<span>${data.ruangan[0]?.nama_ruangan ?? '-'}</span>`;
                 }
             } catch (error) {
                 console.error("Gagal ambil data jadwal:", error);
             }
         }
 
-
         function renderSchedule(schedule) {
             const scheduleList = document.getElementById('scheduleList');
             scheduleList.innerHTML = '';
+
+            const now = new Date();
+            const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
             schedule.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.classList.add('schedule-item');
 
+                let isActive = false;
+
+                if (item.waktu?.jam_mulai && item.waktu?.jam_selesai) {
+                    const [h1, m1] = item.waktu.jam_mulai.split(':').map(Number);
+                    const [h2, m2] = item.waktu.jam_selesai.split(':').map(Number);
+
+                    const start = h1 * 60 + m1;
+                    const end = h2 * 60 + m2;
+
+                    if (nowMinutes >= start && nowMinutes <= end) {
+                        isActive = true;
+                        div.classList.add('active');
+                    }
+                }
+
                 div.innerHTML = `
-                    <div class="schedule-num">${index + 1}</div>
-                    <div class="schedule-time">${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}</div>
-                    <div class="schedule-subject">${item.mapel?.kode_mapel ?? '-'}</div>
-                `;
+            <div class="schedule-num ${isActive ? 'active' : ''}">
+                ${index + 1}
+            </div>
+            <div class="schedule-time">
+                ${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}
+            </div>
+            <div class="schedule-subject">
+                ${item.guru.mapel?.kode_mapel ?? '-'}
+            </div>
+        `;
+
                 scheduleList.appendChild(div);
             });
         }
 
+        // function renderSchedule(schedule) {
+        //     const scheduleList = document.getElementById('scheduleList');
+        //     scheduleList.innerHTML = '';
+
+        //     schedule.forEach((item, index) => {
+        //         const div = document.createElement('div');
+        //         div.classList.add('schedule-item');
+
+        //         div.innerHTML = `
+    //             <div class="schedule-num">${index + 1}</div>
+    //             <div class="schedule-time">${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}</div>
+    //             <div class="schedule-subject">${item.guru.mapel?.kode_mapel ?? '-'}</div>
+    //         `;
+        //         scheduleList.appendChild(div);
+        //     });
+        // }
+
         // Jam digital realtime
         function updateClock() {
             const clock = document.getElementById('digitalClock');
+            const now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            h = h < 10 ? '0' + h : h;
+            m = m < 10 ? '0' + m : m;
+            clock.textContent = h + ':' + m;
+        }
+
+        function updateClock2() {
+            const clock = document.getElementById('digitalClock2');
             const now = new Date();
             let h = now.getHours();
             let m = now.getMinutes();
@@ -681,6 +780,7 @@
         // Init
         loadSchedule();
         updateClock();
+        updateClock2();
         setInterval(updateClock, 1000);
         setInterval(loadSchedule, 60000);
     </script>

@@ -15,62 +15,32 @@ class MapelSeeder extends Seeder
     {
         DB::table('mapels')->insert([
             [
-                'nama_mapel' => 'Matematika',
-                'kode_mapel' => 'MATH',
+                'nama_mapel' => 'Pemrograman Web',
+                'kode_mapel' => 'PWB',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'nama_mapel' => 'Bahasa Indonesia',
-                'kode_mapel' => 'INDO',
+                'nama_mapel' => 'Pemrograman Berbasis Teks',
+                'kode_mapel' => 'PBT',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'nama_mapel' => 'Bahasa Inggris',
-                'kode_mapel' => 'ENG',
+                'nama_mapel' => 'Projek Kreatif dan Kewirausahaan',
+                'kode_mapel' => 'PKK',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'nama_mapel' => 'Ilmu Pengetahuan Alam',
-                'kode_mapel' => 'IPA',
+                'nama_mapel' => 'Pemrograman Perangkat Bergerak',
+                'kode_mapel' => 'PPB',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'nama_mapel' => 'Ilmu Pengetahuan Sosial',
-                'kode_mapel' => 'IPS',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_mapel' => 'Pendidikan Kewarganegaraan',
-                'kode_mapel' => 'PKN',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_mapel' => 'Seni Budaya',
-                'kode_mapel' => 'SENI',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_mapel' => 'Pendidikan Jasmani',
-                'kode_mapel' => 'PJOK',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_mapel' => 'Kimia',
-                'kode_mapel' => 'KIM',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_mapel' => 'Fisika',
-                'kode_mapel' => 'FIS',
+                'nama_mapel' => 'Basis Data',
+                'kode_mapel' => 'BSD',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

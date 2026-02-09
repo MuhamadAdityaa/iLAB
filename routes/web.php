@@ -18,7 +18,7 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 
-Route::get('/jadwal/{id}/', [JadwalController::class, 'tampil'])->name('jadwal');
+Route::get('/jadwal/{id}/', [JadwalController::class, 'tampil'])->where('id', '[0-9]+')->name('jadwal');
 
 // Admin Routes
 Route::middleware('auth')->group(function () {
@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal/{id}/edit', 'edit')->name('jadwal.edit.show');
         Route::post('/jadwal/{id}/update', 'update')->name('jadwal.update');
         Route::delete('/jadwal/{id}/delete', 'destroy')->name('jadwal.delete');
+        Route::post('/jadwal/filter', 'filtering')->name('jadwal.filter');
 
         // Route::get('/jadwal/{id}/', 'tampil')->name('jadwal');
         // Route::get('/api/jadwal/{id}', 'index')->name('api');
@@ -62,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/ruangan/store', 'store')->name('ruangan.store');
         Route::get('/ruangan/{id}/edit', 'edit')->name('ruangan.edit.show');
         Route::post('/ruangan/{id}/update', 'update')->name('ruangan.update');
+        Route::get('/ruangan/{id}/detail', 'detail')->name('ruangan.detail');   
         Route::delete('/ruangan/{id}/delete', 'destroy')->name('ruangan.delete');
     });
 });

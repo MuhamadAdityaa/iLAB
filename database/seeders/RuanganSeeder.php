@@ -16,43 +16,36 @@ class RuanganSeeder extends Seeder
         DB::table('ruangans')->insert([
             [
                 'nama_ruangan' => 'Lab 1',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
+                'penanggung_jawab' => 'Yusuf Effendy, S.T.',
+                'foto_penanggung_jawab' => 'foto/yusuf.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 2',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
+                'penanggung_jawab' => 'Gunawan Busyaeri, S.Pd',
+                'foto_penanggung_jawab' => 'foto/gunawan.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 3',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
+                'penanggung_jawab' => 'Dhian Nur Rahayu, S.T ., M.Kom',
+                'foto_penanggung_jawab' => 'foto/dhian.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 4',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
+                'penanggung_jawab' => 'Indria Listiani Ningrum, S.Kom',
+                'foto_penanggung_jawab' => 'foto/indria.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 5',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nama_ruangan' => 'Lab 6',
-                'penanggung_jawab' => 'Saka Lawrence',
-                'foto_penanggung_jawab' => 'foto/penanggungJawab.jpg',
+                'penanggung_jawab' => 'Ahmad Jumadi, S.Kom ., Gr',
+                'foto_penanggung_jawab' => 'foto/jumadi.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

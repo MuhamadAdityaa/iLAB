@@ -2,11 +2,13 @@
 
 @section('header')
     <h1>Edit Mata Pelajaran</h1>
+    <a href="{{ route('mapel.index') }}" class="btn btn-secondary">
+        ← Kembali ke Daftar Mata Pelajaran
+    </a>
 @endsection
 
 @section('content')
-    <div class="container mt-5">
-        <h2 class="mb-4">Edit Data Mata Pelajaran</h2>
+    <div class="container mt-4">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -39,8 +41,8 @@
 
             <div class="form-group">
                 <label for="kode">Kode Mata Pelajaran</label>
-                <input id="kode" type="kode" class="form-control @error('kode') is-invalid @enderror"
-                    name="kode" value="{{ $mapel->kode_mapel }}" autocomplete="kode">
+                <input id="kode" type="kode" class="form-control @error('kode') is-invalid @enderror" name="kode"
+                    value="{{ $mapel->kode_mapel }}" autocomplete="kode">
                 @error('kode')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

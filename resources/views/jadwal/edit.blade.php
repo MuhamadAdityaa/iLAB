@@ -1,7 +1,10 @@
 @extends('layouts.admin')
 
 @section('header')
-    <h1>Edit Mata Pelajaran</h1>
+    <h1>Edit Jadwal</h1>
+    <a href="{{ route('jadwal.index') }}" class="btn btn-secondary mb-3">
+        ← Kembali ke Daftar Jadwal
+    </a>
 @endsection
 
 @section('content')
@@ -47,7 +50,8 @@
                 <select name="guru_id" id="guru_id" class="form-control @error('guru_id') is-invalid @enderror">
                     <option value="">-- Pilih Guru --</option>
                     @foreach ($gurus as $g)
-                        <option value="{{ $g->id }}" {{ $jadwal->guru_id == $g->id ? 'selected' : '' }}>
+                        <option value="{{ $g->id }}" data-mapel="{{ $g->mapel->nama_mapel ?? '' }}"
+                            {{ $jadwal->guru_id == $g->id ? 'selected' : '' }}>
                             {{ $g->nama_guru }}
                         </option>
                     @endforeach
@@ -55,6 +59,9 @@
                 @error('guru_id')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
+
+                <div id="guru_info" class="mt-2 text-muted small">Mapel terkait:
+                    {{ $jadwal->guru->mapel->nama_mapel ?? 'Tidak ada' }}</div>
             </div>
 
             <div class="form-group">
@@ -68,21 +75,6 @@
                     @endforeach
                 </select>
                 @error('kelas_id')
-                    <span class="invalid-feedback">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="mapel_id">Mata Pelajaran</label>
-                <select name="mapel_id" id="mapel_id" class="form-control @error('mapel_id') is-invalid @enderror">
-                    <option value="">-- Pilih Mapel --</option>
-                    @foreach ($mapels as $m)
-                        <option value="{{ $m->id }}" {{ $jadwal->mapel_id == $m->id ? 'selected' : '' }}>
-                            {{ $m->nama_mapel }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('mapel_id')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
@@ -117,9 +109,99 @@
                 @enderror
             </div>
 
+            {{-- Tom Select (searchable selects) --}}
+            <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+            <style>
+                /* pastikan dropdown TomSelect selalu di atas */
+                .ts-dropdown {
+                    z-index: 99999 !important;
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // daftar id select yang mau di-TomSelect
+                    var ids = ['hari_id', 'guru_id', 'kelas_id', 'mapel_id', 'ruangan_id', 'waktu_id'];
+
+                    ids.forEach(function(id) {
+                        var el = document.getElementById(id);
+                        if (!el) return;
+
+                        var settings = {
+                            create: false,
+                            dropdownParent: 'body', // biarkan append ke body (menghindari clipping)
+                            sortField: (id === 'hari_id') ? [{
+                                field: '$order'
+                            }] : [{
+                                field: 'text',
+                                direction: 'asc'
+                            }],
+                        };
+
+                        // kustomisasi khusus untuk guru
+                        if (id === 'guru_id') {
+                            settings.render = {
+                                option: function(data, escape) {
+                                    // Ambil data-mapel dari option asli (fallback jika tidak ada)
+                                    var opt = document.querySelector('select#guru_id option[value="' + (data
+                                        .value || '') + '"]');
+                                    var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
+                                    var mapelHtml = mapel ? '<div class="small text-muted">Mapel: ' +
+                                        escape(mapel) + '</div>' : '';
+                                    return '<div><strong>' + escape(data.text) + '</strong>' + mapelHtml +
+                                        '</div>';
+                                },
+                                item: function(data, escape) {
+                                    var opt = document.querySelector('select#guru_id option[value="' + (data
+                                        .value || '') + '"]');
+                                    var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
+                                    return '<div>' + escape(data.text) + (mapel ?
+                                        ' <small class="text-muted">(' + escape(mapel) + ')</small>' :
+                                        '') + '</div>';
+                                }
+                            };
+
+                            // update info di bawah select saat berubah
+                            settings.onChange = function(value) {
+                                var info = document.getElementById('guru_info');
+                                if (!info) return;
+                                if (!value) {
+                                    info.textContent = 'Pilih guru untuk melihat mata pelajaran terkait.';
+                                    return;
+                                }
+                                var sel = document.getElementById('guru_id');
+                                var opt = sel.options[sel.selectedIndex];
+                                var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
+                                info.textContent = mapel ? 'Mapel terkait: ' + mapel :
+                                    'Tidak ada mata pelajaran terkait.';
+                            };
+                        }
+
+                        try {
+                            new TomSelect('#' + id, settings);
+                        } catch (e) {
+                            console.error('TomSelect init error for #' + id, e);
+                        }
+                    });
+
+                    // jika ada initial selected guru, tampilkan info
+                    var selInit = document.getElementById('guru_id');
+                    if (selInit) {
+                        var optInit = selInit.options[selInit.selectedIndex];
+                        var mapelInit = optInit ? (optInit.getAttribute('data-mapel') || '') : '';
+                        var infoInit = document.getElementById('guru_info');
+                        if (infoInit) infoInit.textContent = mapelInit ? 'Mapel terkait: ' + mapelInit :
+                            'Pilih guru untuk melihat mata pelajaran terkait.';
+                    }
+                });
+            </script>
+
             <button type="submit" class="btn btn-success">Update Jadwal</button>
             <a href="{{ route('jadwal.index') }}" class="btn btn-secondary">Batal</a>
         </form>
 
     </div>
+
 @endsection

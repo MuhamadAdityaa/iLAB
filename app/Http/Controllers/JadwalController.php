@@ -25,13 +25,13 @@ class JadwalController extends Controller
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
         // dd($hari);
-        $jadwal = Jadwal::with(['mapel','guru','ruangan','waktu'])
+        $jadwal = Jadwal::with(['guru','ruangan','waktu'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
 
         // dd($jadwal);
 
-            
+
         return view('welcome', compact('jadwal', 'kelas', 'hariSekarang', 'date', 'selectedKelasId', 'ruangan'));
     }
 
@@ -39,11 +39,11 @@ class JadwalController extends Controller
         $selectedKelasId = $id;
 
         $hariSekarang = Carbon::now()->locale('id')->dayName;
-        
+
         $date = Carbon::now()->translatedFormat('d F Y');
 
         $hari = Hari::where('hari', $hariSekarang)->first();
-        $jadwal = Jadwal::with(['guru', 'mapel', 'waktu', 'kelas'])
+        $jadwal = Jadwal::with(['guru.mapel', 'waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
         $ruangan = Ruangan::all()->where('id', $selectedKelasId);
@@ -57,10 +57,40 @@ class JadwalController extends Controller
 
     }
 
-    public function indexAdmin() {
-        $jadwal = Jadwal::with(['guru', 'mapel', 'ruangan', 'waktu', 'kelas', 'hari'])->get();
+    public function indexAdmin(Request $request) {
+        // dd($request);
+        $ruanganSelected = $request->all();
+
+        $jadwal = Jadwal::with(['guru', 'ruangan', 'waktu', 'kelas', 'hari'])->get();
+        $ruangan = Ruangan::all();
+        $kelas = Kelas::all();
+        $hari = Hari::all();
         // dd($jadwal);
-        return view('jadwal.index', compact('jadwal'));
+        return view('jadwal.index', compact('jadwal', 'ruangan', 'kelas', 'hari'));
+    }
+
+    public function filtering(Request $request) {
+        // dd($request->all());
+        $ruanganId = $request->input('filterRuangan');
+        $hariId = $request->input('filterHari');
+        $kelasId = $request->input('filterKelas');
+
+        $jadwal = Jadwal::with(['guru', 'ruangan', 'waktu', 'kelas', 'hari'])
+            ->when($ruanganId, function ($query, $ruanganId) {
+                return $query->where('ruangan_id', $ruanganId);
+            })
+            ->when($hariId, function ($query, $hariId) {
+                return $query->where('hari_id', $hariId);
+            })
+            ->when($kelasId, function ($query, $kelasId) {
+                return $query->where('kelas_id', $kelasId);
+            })
+            ->get();
+
+        $ruangan = Ruangan::all();
+        $hari = Hari::all();
+        $kelas = Kelas::all();
+        return view('jadwal.index', compact('jadwal', 'ruangan', 'hari', 'kelas'));
     }
 
     public function create() {
@@ -75,25 +105,33 @@ class JadwalController extends Controller
     }
 
     public function store(Request $request) {
-        // $request->validate([
-        //     'guru_id'    => 'required|exists:gurus,id',
-        //     'mapel_id'   => 'required|exists:mapels,id',
-        //     'ruangan_id' => 'required|exists:ruangans,id',
-        //     'hari_id'    => 'required|exists:haris,id',
-        //     'waktu_id'   => 'required|exists:waktus,id',
-        //     'kelas_id'   => 'required|exists:kelas,id',
-        // ]);
-
-        Jadwal::create([
-            'guru_id'    => $request->guru_id,
-            'mapel_id'   => $request->mapel_id,
-            'ruangan_id' => $request->ruangan_id,
-            'hari_id'    => $request->hari_id,
-            'waktu_id'   => $request->waktu_id,
-            'kelas_id'   => $request->kelas_id,
+        $request->validate([
+            'guru_id'    => 'required|exists:gurus,id',
+            // 'mapel_id'   => 'required|exists:mapels,id',
+            'ruangan_id' => 'required|exists:ruangans,id',
+            'hari_id'    => 'required|exists:haris,id',
+            'waktu_id'   => 'required|exists:waktus,id',
+            'kelas_id'   => 'required|exists:kelas,id',
         ]);
 
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+        $matchData = Jadwal::where('ruangan_id', $request->ruangan_id)
+            ->where('hari_id', $request->hari_id)
+            ->where('waktu_id', $request->waktu_id)
+            ->first();
+        if ($matchData) {
+            return redirect()->back()->withErrors(['error' => 'Jadwal bentrok di ruangan yang sama pada hari dan waktu tersebut.'])->withInput();
+        } else {
+            Jadwal::create([
+                'guru_id'    => $request->guru_id,
+                // 'mapel_id'   => $request->mapel_id,
+                'ruangan_id' => $request->ruangan_id,
+                'hari_id'    => $request->hari_id,
+                'waktu_id'   => $request->waktu_id,
+                'kelas_id'   => $request->kelas_id,
+            ]);
+
+            return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+        }
     }
 
     public function edit($id) {
@@ -115,25 +153,39 @@ class JadwalController extends Controller
         // dd($request->all());
         $request->validate([
             'guru_id'    => 'required|exists:gurus,id',
-            'mapel_id'   => 'required|exists:mapels,id',
             'ruangan_id' => 'required|exists:ruangans,id',
             'hari_id'    => 'required|exists:haris,id',
             'waktu_id'   => 'required|exists:waktus,id',
             'kelas_id'   => 'required|exists:kelas,id',
         ]);
         // dd($request->all());
-
         $jadwal = Jadwal::findOrFail($id);
-        $jadwal->update([
-            'guru_id'    => $request->guru_id,
-            'mapel_id'   => $request->mapel_id,
-            'ruangan_id' => $request->ruangan_id,
-            'hari_id'    => $request->hari_id,
-            'waktu_id'   => $request->waktu_id,
-            'kelas_id'   => $request->kelas_id,
-        ]);
+        // $jadwal->update([
+        //     'guru_id'    => $request->guru_id,
+        //     'ruangan_id' => $request->ruangan_id,
+        //     'hari_id'    => $request->hari_id,
+        //     'waktu_id'   => $request->waktu_id,
+        //     'kelas_id'   => $request->kelas_id,
+        // ]);
 
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diupdate.');
+        // return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diupdate.');
+        $matchData = Jadwal::where('ruangan_id', $request->ruangan_id)
+            ->where('hari_id', $request->hari_id)
+            ->where('waktu_id', $request->waktu_id)
+            ->first();
+        if ($matchData && $matchData->id != $id) {
+            return redirect()->back()->withErrors(['error' => 'Jadwal bentrok di ruangan yang sama pada hari dan waktu tersebut.'])->withInput();
+        } else {
+            $jadwal->update([
+                'guru_id'    => $request->guru_id,
+                'ruangan_id' => $request->ruangan_id,
+                'hari_id'    => $request->hari_id,
+                'waktu_id'   => $request->waktu_id,
+                'kelas_id'   => $request->kelas_id,
+            ]);
+
+            return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diupdate.');
+        }
     }
 
     public function destroy($id) {
