@@ -21,11 +21,12 @@ class KelasSeeder extends Seeder
             foreach ($rombel as $rbl) {
                 DB::table('kelas')->insert([
                     [
-                    'jurusan' => 'RPL', 
-                    'kelas' => $kls.' '.$rbl, 
-                    'created_at' => now(), 
+                    'jurusan' => 'RPL',
+                    'tingkat' => $kls,
+                    'kelas' => $rbl,
+                    'created_at' => now(),
                     'updated_at' => now()
-                    ], 
+                    ],
                 ]);
             }
         }

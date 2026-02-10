@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\RuanganController;
@@ -63,7 +64,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/ruangan/store', 'store')->name('ruangan.store');
         Route::get('/ruangan/{id}/edit', 'edit')->name('ruangan.edit.show');
         Route::post('/ruangan/{id}/update', 'update')->name('ruangan.update');
-        Route::get('/ruangan/{id}/detail', 'detail')->name('ruangan.detail');   
+        Route::get('/ruangan/{id}/detail', 'detail')->name('ruangan.detail');
         Route::delete('/ruangan/{id}/delete', 'destroy')->name('ruangan.delete');
+    });
+
+    Route::controller(KelasController::class)->group(function () {
+        Route::get('/kelas', 'index')->name('kelas.index');
+        Route::get('/kelas/create', 'create')->name('kelas.create');
+        Route::post('/kelas/store', 'store')->name('kelas.store');
+        Route::get('/kelas/{id}/edit', 'edit')->name('kelas.edit.show');
+        Route::post('/kelas/{id}/update', 'update')->name('kelas.update');
+        Route::delete('/kelas/{id}/delete', 'destroy')->name('kelas.delete');
     });
 });

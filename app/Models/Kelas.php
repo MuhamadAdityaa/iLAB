@@ -8,7 +8,8 @@ class Kelas extends Model
 {
     protected $fillable = [
         'jurusan',
-        'kelas'
+        'kelas',
+        'tingkat'
     ];
 
     public function jadwals() {

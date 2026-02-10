@@ -147,6 +147,9 @@
         <a href="{{ route('mapel.index') }}" class="{{ request()->routeIs('mapel.*') ? 'active' : '' }}">
             <i class="fas fa-book"></i> Mata Pelajaran
         </a>
+        <a href="{{ route('kelas.index') }}" class="{{ request()->routeIs('kelas.*') ? 'active' : '' }}">
+            <i class="fas fa-school"></i> Kelas
+        </a>
         <a href="{{ route('ruangan.index') }}" class="{{ request()->routeIs('ruangan.*') ? 'active' : '' }}">
             <i class="fas fa-door-open"></i> Ruangan
         </a>

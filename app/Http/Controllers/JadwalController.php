@@ -46,7 +46,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal::with(['guru.mapel', 'waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
-        $ruangan = Ruangan::all()->where('id', $selectedKelasId);
+        $ruangan = Ruangan::all();
 
         return response()->json([
             'jadwal' => $jadwal,

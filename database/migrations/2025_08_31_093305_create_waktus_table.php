@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('waktus', function (Blueprint $table) {
             $table->id();
-            $table->integer('jam_ke');
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->timestamps();

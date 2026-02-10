@@ -514,6 +514,7 @@
 
                         <div class="info-box" id="infoGuru"><span class="icon icon-user"></span> -</div>
                         <div class="info-box" id="infoMapel"><span class="icon icon-book"></span> -</div>
+                        <div class="info-box" id="infoKelas"><span class="icon icon-home"></span> -</div>
                         <div class="info-box" id="infoRuangan"><span class="icon icon-home"></span> -</div>
                         <div class="info-box" id="infoWaktu"><span class="icon icon-clock"></span> -</div>
                     </div>
@@ -613,48 +614,53 @@
                             `../storage/${currentSchedule.guru.foto}`;
 
                         document.getElementById("infoGuru").innerHTML =
-                            `<span class="icon icon-book"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
+                            `<span class="icon icon-user"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
 
                         document.getElementById("infoMapel").innerHTML =
                             `<span class="icon icon-book"></span> ${currentSchedule.guru.mapel?.nama_mapel ?? '-'}`;
 
+                        document.getElementById("infoKelas").innerHTML =
+                            `<span class="icon icon-home"></span> ${currentSchedule.kelas?.tingkat ?? '-'} ${currentSchedule.kelas?.jurusan ?? '-'} ${currentSchedule.kelas?.kelas ?? '-'}`;
+
                         document.getElementById("infoRuangan").innerHTML =
-                            `<span class="icon icon-home"></span> ${data.ruangan[0]?.nama_ruangan ?? '-'}`;
+                            `<span class="icon icon-home"></span> ${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}`;
 
                         document.getElementById("infoWaktu").innerHTML =
                             `<span class="icon icon-clock"></span> ${currentSchedule.waktu?.jam_mulai ?? '-'} - ${currentSchedule.waktu?.jam_selesai ?? '-'}`;
                     } else if (j >= 15 || j < 7) {
                         // fallback kalau ga ada pelajaran sekarang
                         document.getElementById('fotoGuru').src =
-                            `../storage/${data.ruangan[0]?.foto_penanggung_jawab ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
+                            `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
                         document.getElementById("infoGuru").style.display = "none";
                         document.getElementById("infoMapel").style.display = "none";
+                        document.getElementById("infoKelas").style.display = "none";
                         document.getElementById("infoRuangan").style.display = "none";
                         document.getElementById("infoWaktu").style.display = "none";
 
                         document.getElementById("istirahat").style.display = "block";
                         document.getElementById("penanggung").style.display = "block";
                         document.getElementById("penanggung").innerHTML =
-                            `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
+                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
                         document.getElementById("ruangan").style.display = "block";
                         document.getElementById("ruangan").innerHTML =
-                            `<span>${data.ruangan[0]?.nama_ruangan ?? '-'}</span>`;
+                            `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
                         document.getElementById("digitalClock2").style.display = "none";
                     }
 
                 } else {
                     document.getElementById('fotoGuru').src =
-                        `../storage/${data.ruangan[0]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
+                        `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
                     document.getElementById("infoGuru").style.display = "none";
+                    document.getElementById("infoKelas").style.display = "none";
                     document.getElementById("penanggung").innerHTML =
-                        `<span>Penanggung Jawab: ${data.ruangan[0]?.penanggung_jawab ?? '-'}</span>`;
+                        `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
                     document.getElementById("infoMapel").style.display = "none";
                     document.getElementById("infoRuangan").style.display = "none";
                     document.getElementById("infoWaktu").style.display = "none";
                     document.getElementById("scheduleList").style.display = "none";
                     document.getElementById("digitalClock").style.display = "none";
                     document.getElementById("ruangan").innerHTML =
-                        `<span>${data.ruangan[0]?.nama_ruangan ?? '-'}</span>`;
+                        `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
                 }
             } catch (error) {
                 console.error("Gagal ambil data jadwal:", error);

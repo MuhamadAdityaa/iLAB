@@ -8,9 +8,8 @@ class Waktu extends Model
 {
     protected $fillable = [
         'hari',
-        'jam_ke',
         'jam_mulai',
-        'jam_selesai'
+        'jam_selesai',
     ];
 
     public function jadwals() {
