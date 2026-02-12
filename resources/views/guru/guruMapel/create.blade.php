@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('header')
-    <h1>Edit Data Guru</h1>
+    <h1>Tambah Mapel untuk Guru</h1>
     <a href="{{ route('guru.index') }}" class="btn btn-secondary">
         ← Kembali ke Daftar Guru
     </a>
@@ -24,18 +24,12 @@
             </div>
         @endif
 
-        <form action="{{ route('guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('guru.mapel.store', $guru->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
                 <label for="nama_guru">Nama Guru</label>
-                <input id="nama_guru" type="nama_guru" class="form-control @error('nama_guru') is-invalid @enderror"
-                    name="nama_guru" value="{{ old('nama_guru', $guru->nama_guru) }}" autocomplete="nama_guru">
-                @error('nama_guru')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                <div class="fw-bold fs-5">{{ $guru->nama_guru }}</div>
             </div>
 
             <div class="form-group mt-3">
@@ -43,20 +37,11 @@
                 <select id="mapel_id" name="mapel_id[]" class="form-control" multiple>
                     <option value="" disabled>--Pilih Mata Pelajaran--</option>
                     @foreach ($mapel as $m)
-                        <option value="{{ $m->id }}" {{ in_array($m->id, $guruMapel) ? 'selected' : '' }} >{{ $m->nama_mapel }}</option>
+                        @if (!in_array($m->id, $guruMapel))
+                            <option value="{{ $m->id }}">{{ $m->nama_mapel }}</option>
+                        @endif
                     @endforeach
                 </select>
-            </div>
-
-            <div class="form-group mt-3">
-                <label for="foto">Foto Guru </label>
-                <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
-                    name="foto" value="{{ old('foto') }}" autocomplete="foto">
-                @error('foto')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
 
             {{-- Tom Select (searchable select) --}}

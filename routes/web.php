@@ -6,6 +6,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\GuruMapelController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [JadwalController::class, 'tampil'])->name('welcome');
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/mapel/{id}/edit', 'edit')->name('mapel.edit.show');
         Route::post('/mapel/{id}/update', 'update')->name('mapel.update');
         Route::delete('/mapel/{id}/delete', 'destroy')->name('mapel.delete');
+    });
+
+    Route::controller(GuruMapelController::class)->group(function () {
+        Route::get('/guru/{id}/mapel', 'create')->name('guru.mapel');
+        Route::post('/guru/{id}/mapel/store', 'store')->name('guru.mapel.store');
     });
 
     Route::controller(RuanganController::class)->group(function () {

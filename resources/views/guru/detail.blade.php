@@ -15,16 +15,22 @@
                     <h3 class="mb-4">Detail Guru</h3>
                     <div class="row">
                         {{-- Detail --}}
+                        <div class="fw-semibold">Nama :</div>
                         <div class="col-md-12">
                             <h4 class="mb-3">{{ $guru->nama_guru }}</h4>
                         </div>
+                        {{-- Mapel --}}
+                        <div class='fw-semibold'>Mata Pelajaran :</div>
+                        @foreach ($guruMapel as $gm)
+                            <div class="col-md-12">
+                                <h4 class="badge bg-info text-dark">{{ $gm->mapel->nama_mapel }}</h4>
+                            </div>
+                        @endforeach
                         {{-- Poster --}}
                         <div class="col-md-4 text-center">
-                            <img src="{{ asset('storage/' . $guru->foto) }}" alt="Poster Film"
+                            <img src="{{ asset('../storage/' . $guru->foto) }}" alt="Poster Film"
                                 class="img-fluid rounded shadow-sm">
                         </div>
-
-
                     </div>
                 </div>
             </div>

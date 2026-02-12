@@ -14,6 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama</th>
+                        <th>Mata Pelajaran</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -24,6 +25,11 @@
                             <td>{{ $g->id }}</td>
                             <td>{{ $g->nama_guru }}</td>
                             <td>
+                                @foreach ($guruMapel->where('guru_id', $g->id) as $gm)
+                                    <span class="badge bg-info text-dark">{{ $gm->mapel->kode_mapel }}</span>
+                                @endforeach
+                            </td>
+                            <td>
                                 <a href="{{ route('guru.edit.show', $g->id) }}" class="btn btn-warning">Edit</a>
                                 <form action="{{ route('guru.delete', $g->id) }}" method="POST"
                                     style="display:inline-block;">
@@ -33,6 +39,7 @@
                                         class="btn btn-danger">Hapus</button>
                                 </form>
                                 <a href="{{ route('guru.detail', $g->id) }}" class="btn btn-info">Detail</a>
+                                <a href="{{ route('guru.mapel', $g->id) }}" class="btn btn-primary">+Mapel</a>
                             </td>
                         </tr>
                     @endforeach
