@@ -42,22 +42,17 @@
 
             <div class="form-group">
                 <label for="penanggung_jawab">Penanggung Jawab</label>
-                <input id="penanggung_jawab" type="penanggung_jawab"
-                    class="form-control @error('penanggung_jawab') is-invalid @enderror" name="penanggung_jawab"
-                    value="{{ $ruangan->penanggung_jawab }}" autocomplete="penanggung_jawab">
+                <select id="penanggung_jawab" class="form-control @error('penanggung_jawab') is-invalid @enderror"
+                    name="penanggung_jawab" autocomplete="penanggung_jawab">
+                    <option value="">-- Pilih Guru --</option>
+                    @foreach ($guru as $g)
+                        <option value="{{ $g->id }}"
+                            {{ $ruangan->penanggung_jawab == $g->id ? 'selected' : '' }}>
+                            {{ $g->nama_guru }}</option>
+                    @endforeach
+                </select>
                 @error('penanggung_jawab')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="form-group mt-3">
-                <label for="foto">Foto Guru Penanggung Jawab</label><br></br>
-                <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
-                    name="foto" value="{{ old('foto') }}" autocomplete="foto">
-                @error('foto')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback" role="alert"></span>
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror

@@ -43,15 +43,15 @@
             </div>
 
             <div class="mb-3">
-                <label for="guru_id" class="form-label">Guru</label>
-                <select name="guru_id" id="guru_id" class="form-select @error('guru_id') is-invalid @enderror">
-                    <option value="">-- Pilih Guru --</option>
-                    @foreach ($gurus as $g)
+                <label for="guru_mapel_id" class="form-label">Guru</label>
+                <select name="guru_mapel_id" id="guru_mapel_id" class="form-select @error('guru_mapel_id') is-invalid @enderror">
+                    <option value="">-- Pilih Guru Mapel --</option>
+                    @foreach ($guruMapels as $g)
                         <option value="{{ $g->id }}" data-mapel="{{ $g->mapel->nama_mapel ?? '' }}"
-                            {{ old('guru_id') == $g->id ? 'selected' : '' }}>{{ $g->nama_guru }}</option>
+                            {{ old('guru_mapel_id') == $g->id ? 'selected' : '' }}>{{ $g->guru->nama_guru }}</option>
                     @endforeach
                 </select>
-                @error('guru_id')
+                @error('guru_mapel_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
 
@@ -114,7 +114,7 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // daftar id select yang mau di-TomSelect
-                    var ids = ['hari_id', 'guru_id', 'kelas_id', 'mapel_id', 'ruangan_id', 'waktu_id'];
+                    var ids = ['hari_id', 'guru_mapel_id', 'kelas_id', 'mapel_id', 'ruangan_id', 'waktu_id'];
 
                     ids.forEach(function(id) {
                         var el = document.getElementById(id);
@@ -132,11 +132,11 @@
                         };
 
                         // kustomisasi khusus untuk guru
-                        if (id === 'guru_id') {
+                        if (id === 'guru_mapel_id') {
                             settings.render = {
                                 option: function(data, escape) {
                                     // Ambil data-mapel dari option asli (fallback jika tidak ada)
-                                    var opt = document.querySelector('select#guru_id option[value="' + (data
+                                    var opt = document.querySelector('select#guru_mapel_id option[value="' + (data
                                         .value || '') + '"]');
                                     var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                     var mapelHtml = mapel ? '<div class="small text-muted">Mapel: ' +
@@ -145,7 +145,7 @@
                                         '</div>';
                                 },
                                 item: function(data, escape) {
-                                    var opt = document.querySelector('select#guru_id option[value="' + (data
+                                    var opt = document.querySelector('select#guru_mapel_id option[value="' + (data
                                         .value || '') + '"]');
                                     var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                     return '<div>' + escape(data.text) + (mapel ?
@@ -162,7 +162,7 @@
                                     info.textContent = 'Pilih guru untuk melihat mata pelajaran terkait.';
                                     return;
                                 }
-                                var sel = document.getElementById('guru_id');
+                                var sel = document.getElementById('guru_mapel_id');
                                 var opt = sel.options[sel.selectedIndex];
                                 var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                 info.textContent = mapel ? 'Mapel terkait: ' + mapel :

@@ -8,15 +8,14 @@ class Guru extends Model
 {
     protected $fillable = [
         'nama_guru',
-        'mapel_id',
         'foto',
     ];
 
-    public function jadwals() {
-        return $this->hasMany(Jadwal::class);
+    public function mapels() {
+        return $this->hasMany(GuruMapel::class, 'guru_id');
     }
 
-    public function mapel() {
-        return $this->belongsTo(Mapel::class, 'mapel_id');
+    public function ruangan() {
+        return $this->hasOne(Ruangan::class, 'penanggung_jawab');
     }
 }

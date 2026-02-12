@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
             $table->string('nama_guru');
-            $table->foreignId('mapel_id')->constrained()->cascadeOnDelete();
             $table->string('foto');
             $table->timestamps();
         });

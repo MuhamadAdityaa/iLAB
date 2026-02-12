@@ -46,22 +46,22 @@
             </div>
 
             <div class="form-group">
-                <label for="guru_id">Guru</label>
-                <select name="guru_id" id="guru_id" class="form-control @error('guru_id') is-invalid @enderror">
+                <label for="guru_mapel_id">Guru</label>
+                <select name="guru_mapel_id" id="guru_mapel_id"
+                    class="form-control @error('guru_mapel_id') is-invalid @enderror">
                     <option value="">-- Pilih Guru --</option>
-                    @foreach ($gurus as $g)
+                    @foreach ($guruMapels as $g)
                         <option value="{{ $g->id }}" data-mapel="{{ $g->mapel->nama_mapel ?? '' }}"
-                            {{ $jadwal->guru_id == $g->id ? 'selected' : '' }}>
-                            {{ $g->nama_guru }}
+                            {{ $jadwal->guru_mapel_id == $g->id ? 'selected' : '' }}>{{ $g->guru->nama_guru }}
                         </option>
                     @endforeach
                 </select>
-                @error('guru_id')
+                @error('guru_mapel_id')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
 
                 <div id="guru_info" class="mt-2 text-muted small">Mapel terkait:
-                    {{ $jadwal->guru->mapel->nama_mapel ?? 'Tidak ada' }}</div>
+                    {{ $jadwal->guruMapel->mapel->nama_mapel ?? 'Tidak ada' }}</div>
             </div>
 
             <div class="form-group">
@@ -123,7 +123,7 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // daftar id select yang mau di-TomSelect
-                    var ids = ['hari_id', 'guru_id', 'kelas_id', 'mapel_id', 'ruangan_id', 'waktu_id'];
+                    var ids = ['hari_id', 'guru_mapel_id', 'kelas_id', 'mapel_id', 'ruangan_id', 'waktu_id'];
 
                     ids.forEach(function(id) {
                         var el = document.getElementById(id);
@@ -141,12 +141,13 @@
                         };
 
                         // kustomisasi khusus untuk guru
-                        if (id === 'guru_id') {
+                        if (id === 'guru_mapel_id') {
                             settings.render = {
                                 option: function(data, escape) {
                                     // Ambil data-mapel dari option asli (fallback jika tidak ada)
-                                    var opt = document.querySelector('select#guru_id option[value="' + (data
-                                        .value || '') + '"]');
+                                    var opt = document.querySelector('select#guru_mapel_id option[value="' +
+                                        (data
+                                            .value || '') + '"]');
                                     var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                     var mapelHtml = mapel ? '<div class="small text-muted">Mapel: ' +
                                         escape(mapel) + '</div>' : '';
@@ -154,8 +155,9 @@
                                         '</div>';
                                 },
                                 item: function(data, escape) {
-                                    var opt = document.querySelector('select#guru_id option[value="' + (data
-                                        .value || '') + '"]');
+                                    var opt = document.querySelector('select#guru_mapel_id option[value="' +
+                                        (data
+                                            .value || '') + '"]');
                                     var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                     return '<div>' + escape(data.text) + (mapel ?
                                         ' <small class="text-muted">(' + escape(mapel) + ')</small>' :
@@ -171,7 +173,7 @@
                                     info.textContent = 'Pilih guru untuk melihat mata pelajaran terkait.';
                                     return;
                                 }
-                                var sel = document.getElementById('guru_id');
+                                var sel = document.getElementById('guru_mapel_id');
                                 var opt = sel.options[sel.selectedIndex];
                                 var mapel = opt ? (opt.getAttribute('data-mapel') || '') : '';
                                 info.textContent = mapel ? 'Mapel terkait: ' + mapel :
@@ -187,7 +189,7 @@
                     });
 
                     // jika ada initial selected guru, tampilkan info
-                    var selInit = document.getElementById('guru_id');
+                    var selInit = document.getElementById('guru_mapel_id');
                     if (selInit) {
                         var optInit = selInit.options[selInit.selectedIndex];
                         var mapelInit = optInit ? (optInit.getAttribute('data-mapel') || '') : '';

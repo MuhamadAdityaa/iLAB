@@ -579,7 +579,7 @@
                 // render daftar jadwal
                 renderSchedule(data.jadwal);
 
-                // cek mapel sekarang
+                // Cek apakah ada jadwal pembelajaran (Weekday)
                 if (data.jadwal.length > 0) {
                     const now = new Date();
                     const nowMinutes = now.getHours() * 60 + now.getMinutes(); // ubah ke menit
@@ -607,6 +607,7 @@
                     // console.log(last.waktu?.jam_selesai);
 
                     if (currentSchedule) {
+                        // Tampilan sedang ada pembelajaran sekarang
                         document.getElementById("istirahat").style.display = "none";
                         document.getElementById("penanggung").style.display = "none";
                         document.getElementById("ruangan").style.display = "none";
@@ -631,7 +632,7 @@
                         document.getElementById("infoWaktu").innerHTML =
                             `<span class="icon icon-clock"></span> ${currentSchedule.waktu?.jam_mulai ?? '-'} - ${currentSchedule.waktu?.jam_selesai ?? '-'}`;
                     } else if (j >= 15 || j < 7) {
-                        // fallback kalau ga ada pelajaran sekarang
+                        // Tampilan di luar jam sekolah
                         document.getElementById('fotoGuru').src =
                             `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
                         document.getElementById("infoGuru").style.display = "none";
@@ -648,8 +649,25 @@
                         document.getElementById("ruangan").innerHTML =
                             `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
                         document.getElementById("digitalClock2").style.display = "none";
+                    } else {
+                        // Tampilan ketika istirahat
+                        document.getElementById('fotoGuru').src =
+                            `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
+                        document.getElementById("infoGuru").style.display = "none";
+                        document.getElementById("infoKelas").style.display = "none";
+                        document.getElementById("penanggung").innerHTML =
+                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
+                        document.getElementById("infoMapel").style.display = "none";
+                        document.getElementById("infoRuangan").style.display = "none";
+                        document.getElementById("infoWaktu").style.display = "none";
+                        document.getElementById("scheduleList").style.display = "none";
+                        document.getElementById("digitalClock").style.display = "none";
+                        document.getElementById("ruangan").innerHTML =
+                            `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
+                        document.getElementById("istirahat").innerHTML = "ISTIRAHAT";
                     }
 
+                    // Tidak ada jadwal hari ini (Weekend)
                 } else {
                     document.getElementById('fotoGuru').src =
                         `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
@@ -705,29 +723,11 @@
             </div>
             <div class="schedule-subject">
                 ${item.guru.mapel?.kode_mapel ?? '-'}
-            </div>
-        `;
+            </div>`;
 
                 scheduleList.appendChild(div);
             });
         }
-
-        // function renderSchedule(schedule) {
-        //     const scheduleList = document.getElementById('scheduleList');
-        //     scheduleList.innerHTML = '';
-
-        //     schedule.forEach((item, index) => {
-        //         const div = document.createElement('div');
-        //         div.classList.add('schedule-item');
-
-        //         div.innerHTML = `
-    //             <div class="schedule-num">${index + 1}</div>
-    //             <div class="schedule-time">${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}</div>
-    //             <div class="schedule-subject">${item.guru.mapel?.kode_mapel ?? '-'}</div>
-    //         `;
-        //         scheduleList.appendChild(div);
-        //     });
-        // }
 
         // Jam digital realtime
         function updateClock() {

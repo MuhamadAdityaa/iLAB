@@ -43,7 +43,7 @@ class JadwalSeeder extends Seeder
         // }
 
         $guruArr = [
-            1, 2, 3, 4, 5,
+            1, 2, 3, 4, 5, 6,
         ];
 
         foreach (range(1, 5) as $ruangan) {
@@ -53,9 +53,9 @@ class JadwalSeeder extends Seeder
                 DB::table('jadwals')->insert([
                     // Senin
                     [
-                        'guru_id' => $tempGuru,
+                        'guru_mapel_id' => $tempGuru,
                         'ruangan_id' => $ruangan,
-                        'hari_id' => 3,
+                        'hari_id' => 4,
                         'waktu_id' => $i,
                         'kelas_id' => $ruangan,
                         'created_at' => now(),

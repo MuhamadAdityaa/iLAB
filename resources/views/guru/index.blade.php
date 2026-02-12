@@ -14,7 +14,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama</th>
-                        <th>Mata Pelajaran</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -24,7 +23,6 @@
                         <tr>
                             <td>{{ $g->id }}</td>
                             <td>{{ $g->nama_guru }}</td>
-                            <td>{{ $g->mapel->nama_mapel }}</td>
                             <td>
                                 <a href="{{ route('guru.edit.show', $g->id) }}" class="btn btn-warning">Edit</a>
                                 <form action="{{ route('guru.delete', $g->id) }}" method="POST"

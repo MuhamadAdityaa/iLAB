@@ -16,36 +16,31 @@ class RuanganSeeder extends Seeder
         DB::table('ruangans')->insert([
             [
                 'nama_ruangan' => 'Lab 1',
-                'penanggung_jawab' => 'Yusuf Effendy, S.T.',
-                'foto_penanggung_jawab' => 'foto/yusuf.png',
+                'penanggung_jawab' => 4,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 2',
-                'penanggung_jawab' => 'Gunawan Busyaeri, S.Pd',
-                'foto_penanggung_jawab' => 'foto/gunawan.png',
+                'penanggung_jawab' => 2,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 3',
-                'penanggung_jawab' => 'Dhian Nur Rahayu, S.T ., M.Kom',
-                'foto_penanggung_jawab' => 'foto/dhian.png',
+                'penanggung_jawab' => 3,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 4',
-                'penanggung_jawab' => 'Indria Listiani Ningrum, S.Kom',
-                'foto_penanggung_jawab' => 'foto/indria.png',
+                'penanggung_jawab' => 5,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama_ruangan' => 'Lab 5',
-                'penanggung_jawab' => 'Ahmad Jumadi, S.Kom ., Gr',
-                'foto_penanggung_jawab' => 'foto/jumadi.png',
+                'penanggung_jawab' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
             ],

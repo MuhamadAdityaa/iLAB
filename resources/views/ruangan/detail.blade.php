@@ -19,11 +19,11 @@
                             <h4 class="mb-3">{{ $ruangan->nama_ruangan }}</h4>
                         </div>
                         <div class="col-md-12">
-                            <p><strong>Penanggung Jawab:</strong> {{ $ruangan->penanggung_jawab }}</p>
+                            <p><strong>Penanggung Jawab:</strong> {{ $ruangan->guru->nama_guru }}</p>
                         </div>
                         {{-- Poster --}}
                         <div class="col-md-4 text-center">
-                            <img src="{{ asset('storage/' . $ruangan->foto_penanggung_jawab) }}" alt="Poster Film"
+                            <img src="{{ asset('../storage/' . $ruangan->guru->foto) }}" alt="Poster Film"
                                 class="img-fluid rounded shadow-sm">
                         </div>
 

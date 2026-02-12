@@ -9,8 +9,11 @@ class Ruangan extends Model
     protected $fillable = [
         'nama_ruangan',
         'penanggung_jawab',
-        'foto_penanggung_jawab',
     ];
+
+    public function guru() {
+        return $this->belongsTo(Guru::class, 'penanggung_jawab');
+    }
 
     public function jadwals() {
         return $this->hasMany(Jadwal::class);

@@ -11,6 +11,7 @@ use App\Models\{
     Mapel,
     Ruangan,
     Waktu,
+    GuruMapel,
 };
 use Carbon\Carbon;
 
@@ -25,7 +26,7 @@ class JadwalController extends Controller
         $date = Carbon::now()->translatedFormat('d F Y');
         $hari = Hari::where('hari', $hariSekarang)->first();
         // dd($hari);
-        $jadwal = Jadwal::with(['guru','ruangan','waktu'])
+        $jadwal = Jadwal::with(['guruMapels','ruangan','waktu'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
 
@@ -43,7 +44,7 @@ class JadwalController extends Controller
         $date = Carbon::now()->translatedFormat('d F Y');
 
         $hari = Hari::where('hari', $hariSekarang)->first();
-        $jadwal = Jadwal::with(['guru.mapel', 'waktu', 'kelas'])
+        $jadwal = Jadwal::with(['guruMapels', 'waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
         $ruangan = Ruangan::all();
@@ -61,7 +62,7 @@ class JadwalController extends Controller
         // dd($request);
         $ruanganSelected = $request->all();
 
-        $jadwal = Jadwal::with(['guru', 'ruangan', 'waktu', 'kelas', 'hari'])->get();
+        $jadwal = Jadwal::with(['guruMapels', 'ruangan', 'waktu', 'kelas', 'hari'])->get();
         $ruangan = Ruangan::all();
         $kelas = Kelas::all();
         $hari = Hari::all();
@@ -75,7 +76,7 @@ class JadwalController extends Controller
         $hariId = $request->input('filterHari');
         $kelasId = $request->input('filterKelas');
 
-        $jadwal = Jadwal::with(['guru', 'ruangan', 'waktu', 'kelas', 'hari'])
+        $jadwal = Jadwal::with(['guruMapels', 'ruangan', 'waktu', 'kelas', 'hari'])
             ->when($ruanganId, function ($query, $ruanganId) {
                 return $query->where('ruangan_id', $ruanganId);
             })
@@ -94,19 +95,21 @@ class JadwalController extends Controller
     }
 
     public function create() {
-        $gurus = Guru::all();
+        $guruMapels = GuruMapel::all();
         $mapels = Mapel::all();
         $ruangans = Ruangan::all();
         $haris = Hari::all();
         $waktus = Waktu::all();
         $kelas = Kelas::all();
 
-        return view('jadwal.create', compact('gurus', 'mapels', 'ruangans', 'haris', 'waktus', 'kelas'));
+        // dd($guruMapels);
+
+        return view('jadwal.create', compact('guruMapels', 'mapels', 'ruangans', 'haris', 'waktus', 'kelas'));
     }
 
     public function store(Request $request) {
         $request->validate([
-            'guru_id'    => 'required|exists:gurus,id',
+            'guru_mapel_id' => 'required|exists:guru_mapels,id',
             // 'mapel_id'   => 'required|exists:mapels,id',
             'ruangan_id' => 'required|exists:ruangans,id',
             'hari_id'    => 'required|exists:haris,id',
@@ -122,7 +125,7 @@ class JadwalController extends Controller
             return redirect()->back()->withErrors(['error' => 'Jadwal bentrok di ruangan yang sama pada hari dan waktu tersebut.'])->withInput();
         } else {
             Jadwal::create([
-                'guru_id'    => $request->guru_id,
+                'guru_mapel_id'    => $request->guru_mapel_id,
                 // 'mapel_id'   => $request->mapel_id,
                 'ruangan_id' => $request->ruangan_id,
                 'hari_id'    => $request->hari_id,
@@ -136,7 +139,7 @@ class JadwalController extends Controller
 
     public function edit($id) {
         $jadwal = Jadwal::findOrFail($id);
-        $gurus = Guru::all();
+        $guruMapels = GuruMapel::all();
         $mapels = Mapel::all();
         $ruangans = Ruangan::all();
         $haris = Hari::all();
@@ -145,14 +148,14 @@ class JadwalController extends Controller
 
         // dd($mapels);
         // dd($gurus,$mapels,$ruangans,$haris, $waktus, $kelas);
-        return view('jadwal.edit', compact('jadwal', 'gurus', 'mapels', 'ruangans', 'haris', 'waktus', 'kelas'));
+        return view('jadwal.edit', compact('jadwal', 'guruMapels', 'mapels', 'ruangans', 'haris', 'waktus', 'kelas'));
     }
 
     public function update(Request $request, $id) {
 
         // dd($request->all());
         $request->validate([
-            'guru_id'    => 'required|exists:gurus,id',
+            'guru_mapel_id'    => 'required|exists:guru_mapels,id',
             'ruangan_id' => 'required|exists:ruangans,id',
             'hari_id'    => 'required|exists:haris,id',
             'waktu_id'   => 'required|exists:waktus,id',
@@ -161,7 +164,7 @@ class JadwalController extends Controller
         // dd($request->all());
         $jadwal = Jadwal::findOrFail($id);
         // $jadwal->update([
-        //     'guru_id'    => $request->guru_id,
+        //     'guru_mapel_id'    => $request->guru_mapel_id,
         //     'ruangan_id' => $request->ruangan_id,
         //     'hari_id'    => $request->hari_id,
         //     'waktu_id'   => $request->waktu_id,
@@ -177,7 +180,7 @@ class JadwalController extends Controller
             return redirect()->back()->withErrors(['error' => 'Jadwal bentrok di ruangan yang sama pada hari dan waktu tersebut.'])->withInput();
         } else {
             $jadwal->update([
-                'guru_id'    => $request->guru_id,
+                'guru_mapel_id'    => $request->guru_mapel_id,
                 'ruangan_id' => $request->ruangan_id,
                 'hari_id'    => $request->hari_id,
                 'waktu_id'   => $request->waktu_id,

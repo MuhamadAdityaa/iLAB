@@ -9,20 +9,19 @@ use App\Models\Mapel;
 class GuruController extends Controller
 {
     public function index() {
-        $guru = Guru::with('mapel')->get();
+        $guru = Guru::all();
+        // dd($guru);
 
         return view('guru.index', compact('guru'));
     }
 
     public function create() {
-        $mapels = Mapel::all();
-        return view('guru.create', compact('mapels'));
+        return view('guru.create');
     }
 
     public function store(Request $request) {
         $request->validate([
             'nama_guru' => 'required|string|max:255',
-            'mapel_id' => 'required|exists:mapels,id',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -33,7 +32,6 @@ class GuruController extends Controller
 
         Guru::create([
             'nama_guru' => $request->nama_guru,
-            'mapel_id' => $request->mapel_id,
             'foto' => $path,
         ]);
 
@@ -42,15 +40,13 @@ class GuruController extends Controller
 
     public function edit($id) {
         $guru = Guru::findOrFail($id);
-        $mapels = Mapel::all();
-        return view('guru.edit', compact('guru', 'mapels'));
+        return view('guru.edit', compact('guru'));
     }
 
     public function update(Request $request, $id) {
         $request->validate([
             'nama_guru' => 'required|string|max:255',
-            'mapel_id' => 'required|exists:mapels,id',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -62,7 +58,6 @@ class GuruController extends Controller
             $guru = Guru::findOrFail($id);
             $guru->update([
                 'nama_guru' => $request->nama_guru,
-                'mapel_id' => $request->mapel_id,
                 'foto' => $path,
             ]);
         }
@@ -70,7 +65,6 @@ class GuruController extends Controller
         $guru = Guru::findOrFail($id);
         $guru->update([
             'nama_guru' => $request->nama_guru,
-            'mapel_id' => $request->mapel_id,
         ]);
 
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui.');

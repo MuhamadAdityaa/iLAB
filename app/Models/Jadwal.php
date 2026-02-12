@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Jadwal extends Model
 {
     protected $fillable = [
-        'guru_id',
+        'guru_mapel_id',
         'ruangan_id',
         'hari_id',
         'waktu_id',
         'kelas_id',
     ];
 
-    public function guru() {
-        return $this->belongsTo(Guru::class, 'guru_id');
+    public function guruMapels() {
+        return $this->belongsTo(GuruMapel::class, 'guru_mapel_id');
     }
 
     public function ruangan() {

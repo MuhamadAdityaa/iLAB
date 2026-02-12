@@ -3,40 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Ruangan;
+use App\Models\{
+    Ruangan,
+    Guru,
+};
 
 class RuanganController extends Controller
 {
 
 
     public function index(){
-        $ruangan = Ruangan::all();
+        $ruangan = Ruangan::with('guru')->get();
+        // dd($ruangan);
 
         return view('ruangan.index', compact('ruangan'));
     }
 
     public function create() {
-        return view('ruangan.create');
+        $guru = Guru::all();
+
+        return view('ruangan.create', compact('guru'));
     }
 
     public function store(Request $request) {
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
-            'penanggung_jawab' => 'required|string|max:255',
-            'foto' => 'required|image|mimes:jpg,jpeg,png,webp',
+            'penanggung_jawab' => 'required|integer|max:255',
         ]);
 
         // dd($request->penanggung_jawab);
 
-        $foto = $request->file('foto');
-        $filename = time() . '.' . $foto->getClientOriginalExtension();
-        $foto->move(public_path('storage/foto'), $filename);
-        $path = 'foto/' . $filename;
-
         Ruangan::create([
             'nama_ruangan' => $request->nama_ruangan,
             'penanggung_jawab' => $request->penanggung_jawab,
-            'foto_penanggung_jawab' => $path,
         ]);
 
         return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil ditambahkan.');
@@ -44,32 +43,16 @@ class RuanganController extends Controller
 
     public function edit($id) {
         $ruangan = Ruangan::findOrFail($id);
+        $guru = Guru::all();
 
-        return view('ruangan.edit', compact('ruangan'));
+        return view('ruangan.edit', compact('ruangan', 'guru'));
     }
 
     public function update(Request $request, $id) {
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
-            'penanggung_jawab' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'penanggung_jawab' => 'required|integer|max:255',
         ]);
-
-        if ( $request->hasFile('foto') ) {
-            $foto = $request->file('foto');
-            $filename = time() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('storage/foto'), $filename);
-            $path = 'foto/' . $filename;
-
-            $ruangan = Ruangan::findOrFail($id);
-            $ruangan->update([
-                'nama_ruangan' => $request->nama_ruangan,
-                'penanggung_jawab' => $request->penanggung_jawab,
-                'foto_penanggung_jawab' => $path,
-            ]);
-
-            return redirect()->route('ruangan.index')->with('success', 'Data ruangan berhasil diperbarui.');
-        }
 
         $ruangan = Ruangan::findOrFail($id);
         $ruangan->update([

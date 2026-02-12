@@ -11,8 +11,9 @@ class Mapel extends Model
         'kode_mapel'
     ];
 
+
     public function gurus() {
-        return $this->hasMany(Guru::class);
+        return $this->hasMany(GuruMapel::class, 'mapel_id');
     }
 
 }

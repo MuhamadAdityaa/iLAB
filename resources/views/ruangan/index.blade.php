@@ -14,6 +14,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama Ruangan</th>
+                        <th>Penanggung Jawab</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -22,7 +23,7 @@
                         <tr>
                             <td>{{ $r->id }}</td>
                             <td>{{ $r->nama_ruangan }}</td>
-                            <td>{{ $r->penanggung_jawab }}</td>
+                            <td>{{ $r->guru->nama_guru }}</td>
                             <td>
                                 <a href="{{ route('ruangan.edit.show', $r->id) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('ruangan.detail', $r->id) }}" class="btn btn-info">Detail</a>

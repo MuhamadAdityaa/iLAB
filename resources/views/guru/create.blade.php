@@ -39,22 +39,6 @@
             </div>
 
             <div class="form-group mt-3">
-                <label for="mapel_id">Mata Pelajaran</label>
-                <select id="mapel_id" name="mapel_id" class="form-select @error('mapel_id') is-invalid @enderror">
-                    <option value="">Pilih Mata Pelajaran</option>
-                    @foreach ($mapels as $mapel)
-                        <option value="{{ $mapel->id }}" {{ old('mapel_id') == $mapel->id ? 'selected' : '' }}>
-                            {{ $mapel->nama_mapel }}</option>
-                    @endforeach
-                </select>
-                @error('mapel_id')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="form-group mt-3">
                 <label for="foto">Foto Guru</label>
                 <input id="foto" type="file" class="form-control-file @error('foto') is-invalid @enderror"
                     name="foto" value="{{ old('foto') }}" autocomplete="foto">
