@@ -615,13 +615,13 @@
 
                         console.log(currentSchedule);
                         document.getElementById("fotoGuru").src =
-                            `../storage/${currentSchedule.guru.foto}`;
+                            `../storage/${currentSchedule.guru_mapels.guru.foto}`;
 
                         document.getElementById("infoGuru").innerHTML =
-                            `<span class="icon icon-user"></span> ${currentSchedule.guru?.nama_guru ?? '-'}`;
+                            `<span class="icon icon-user"></span> ${currentSchedule.guru_mapels.guru?.nama_guru ?? '-'}`;
 
                         document.getElementById("infoMapel").innerHTML =
-                            `<span class="icon icon-book"></span> ${currentSchedule.guru.mapel?.nama_mapel ?? '-'}`;
+                            `<span class="icon icon-book"></span> ${currentSchedule.guru_mapels.mapel?.nama_mapel ?? '-'}`;
 
                         document.getElementById("infoKelas").innerHTML =
                             `<span class="icon icon-home"></span> ${currentSchedule.kelas?.tingkat ?? '-'} ${currentSchedule.kelas?.jurusan ?? '-'} ${currentSchedule.kelas?.kelas ?? '-'}`;
@@ -634,7 +634,7 @@
                     } else if (j >= 15 || j < 7) {
                         // Tampilan di luar jam sekolah
                         document.getElementById('fotoGuru').src =
-                            `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
+                            `../storage/${data.ruangan[kelas-1]?.guru?.foto ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
                         document.getElementById("infoGuru").style.display = "none";
                         document.getElementById("infoMapel").style.display = "none";
                         document.getElementById("infoKelas").style.display = "none";
@@ -644,7 +644,7 @@
                         document.getElementById("istirahat").style.display = "block";
                         document.getElementById("penanggung").style.display = "block";
                         document.getElementById("penanggung").innerHTML =
-                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
+                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.guru?.nama_guru ?? '-'}</span>`;
                         document.getElementById("ruangan").style.display = "block";
                         document.getElementById("ruangan").innerHTML =
                             `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
@@ -652,29 +652,32 @@
                     } else {
                         // Tampilan ketika istirahat
                         document.getElementById('fotoGuru').src =
-                            `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
+                            `../storage/${data.ruangan[kelas-1]?.guru?.foto ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`
                         document.getElementById("infoGuru").style.display = "none";
-                        document.getElementById("infoKelas").style.display = "none";
-                        document.getElementById("penanggung").innerHTML =
-                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
                         document.getElementById("infoMapel").style.display = "none";
+                        document.getElementById("infoKelas").style.display = "none";
                         document.getElementById("infoRuangan").style.display = "none";
                         document.getElementById("infoWaktu").style.display = "none";
-                        document.getElementById("scheduleList").style.display = "none";
-                        document.getElementById("digitalClock").style.display = "none";
+
+                        document.getElementById("istirahat").style.display = "block";
+                        document.getElementById("istirahat").innerText = "Istirahat";
+                        document.getElementById("penanggung").style.display = "block";
+                        document.getElementById("penanggung").innerHTML =
+                            `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.guru?.nama_guru ?? '-'}</span>`;
+                        document.getElementById("ruangan").style.display = "block";
                         document.getElementById("ruangan").innerHTML =
                             `<span>${data.ruangan[kelas-1]?.nama_ruangan ?? '-'}</span>`;
-                        document.getElementById("istirahat").innerHTML = "ISTIRAHAT";
+                        document.getElementById("digitalClock2").style.display = "none";
                     }
 
                     // Tidak ada jadwal hari ini (Weekend)
                 } else {
                     document.getElementById('fotoGuru').src =
-                        `../storage/${data.ruangan[kelas-1]?.foto_penanggung_jawab ?? 'foto/penanggungJawab.jpg'}`;
+                        `../storage/${data.ruangan[kelas-1]?.guru?.foto ?? 'https://i.postimg.cc/7ZQQ64Q2/profile.jpg'}`;
                     document.getElementById("infoGuru").style.display = "none";
                     document.getElementById("infoKelas").style.display = "none";
                     document.getElementById("penanggung").innerHTML =
-                        `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.penanggung_jawab ?? '-'}</span>`;
+                        `<span>Penanggung Jawab: ${data.ruangan[kelas-1]?.guru?.nama_guru ?? '-'}</span>`;
                     document.getElementById("infoMapel").style.display = "none";
                     document.getElementById("infoRuangan").style.display = "none";
                     document.getElementById("infoWaktu").style.display = "none";
@@ -722,7 +725,7 @@
                 ${item.waktu?.jam_mulai ?? '-'} - ${item.waktu?.jam_selesai ?? '-'}
             </div>
             <div class="schedule-subject">
-                ${item.guru.mapel?.kode_mapel ?? '-'}
+                ${item.guru_mapels?.mapel?.kode_mapel ?? '-'}
             </div>`;
 
                 scheduleList.appendChild(div);

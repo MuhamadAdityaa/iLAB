@@ -44,10 +44,10 @@ class JadwalController extends Controller
         $date = Carbon::now()->translatedFormat('d F Y');
 
         $hari = Hari::where('hari', $hariSekarang)->first();
-        $jadwal = Jadwal::with(['guruMapels', 'waktu', 'kelas'])
+        $jadwal = Jadwal::with(['guruMapels.guru','guruMapels.mapel','waktu', 'kelas'])
             ->where('hari_id', $hari->id)->where('kelas_id', $selectedKelasId)
             ->get();
-        $ruangan = Ruangan::all();
+        $ruangan = Ruangan::with('guru')->get();
 
         return response()->json([
             'jadwal' => $jadwal,
