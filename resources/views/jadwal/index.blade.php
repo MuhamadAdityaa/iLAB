@@ -30,7 +30,7 @@
             <option value="">-- Filter berdasarkan kelas --</option>
             @foreach ($kelas as $k)
                 <option value="{{ $k->id }}" {{ request('kelas_id') == $k->id ? 'selected' : '' }}>
-                    {{ $k->kelas }}
+                    {{ $k->tingkat }} {{ $k->jurusan }} {{ $k->kelas }}`
                 </option>
             @endforeach
         </select>

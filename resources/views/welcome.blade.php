@@ -562,9 +562,11 @@
     <script>
         async function loadSchedule() {
             try {
+                // Dapatkan ID ruangan yang dipilih dari server-side
                 let kelas = {{ $selectedKelasId }}
                 console.log(`/api/jadwal/${kelas}`)
 
+                // Mengambil data jadwal hari ini dalam bentuk JSON
                 const response = await fetch(`/api/jadwal/${kelas}`);
                 const data = await response.json();
 
@@ -585,6 +587,7 @@
                     let currentSchedule = null;
 
                     data.jadwal.forEach(item => {
+                        // cek apakah waktu sekarang ada di antara jam_mulai dan jam_selesai
                         if (item.waktu?.jam_mulai && item.waktu?.jam_selesai) {
                             const [h1, m1] = item.waktu.jam_mulai.split(":").map(Number);
                             const [h2, m2] = item.waktu.jam_selesai.split(":").map(Number);
@@ -788,7 +791,7 @@
         updateClock();
         updateClock2();
         setInterval(updateClock, 1000);
-        setInterval(loadSchedule, 60000);
+        setInterval(loadSchedule, 40000);
     </script>
 </body>
 
